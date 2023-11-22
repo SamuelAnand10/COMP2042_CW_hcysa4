@@ -1,18 +1,7 @@
 package brickGame;
 
 public class collisionChecker extends Main{
-    public void resetColideFlags() {
 
-        colideToBreak = false;
-        colideToBreakAndMoveToRight = false;
-        colideToRightWall = false;
-        colideToLeftWall = false;
-
-        colideToRightBlock = false;
-        colideToBottomBlock = false;
-        colideToLeftBlock = false;
-        colideToTopBlock = false;
-    }
 
     public boolean goDownBall                  = true;
     public boolean goRightBall                 = true;
@@ -28,7 +17,18 @@ public class collisionChecker extends Main{
     public double vX = 1.000;
     public double vY = 1.000;
 
+    public void resetColideFlags() {
 
+        colideToBreak = false;
+        colideToBreakAndMoveToRight = false;
+        colideToRightWall = false;
+        colideToLeftWall = false;
+
+        colideToRightBlock = false;
+        colideToBottomBlock = false;
+        colideToLeftBlock = false;
+        colideToTopBlock = false;
+    }
 
 
     public void setPhysicsToBall() {
@@ -75,7 +75,7 @@ public class collisionChecker extends Main{
     }
 
 
-    public void WallCollide(){
+    public int WallCollide(){
 
         if (xBall >= sceneWidth) {
             resetColideFlags();
@@ -104,9 +104,11 @@ public class collisionChecker extends Main{
         if (colideToLeftWall) {
             goRightBall = true;
         }
+
+        return 0;
     }
 
-    public void BreakerCollide(){
+    public int BreakerCollide(){
 
         if (yBall >= yBreak - ballRadius) {
             //System.out.println("Colide1");
@@ -139,10 +141,10 @@ public class collisionChecker extends Main{
         }
 
 
-
+        return 0;
     }
 
-    public void BlockCollide(){
+    public int BlockCollide(){
         if (colideToRightBlock) {
             goRightBall = true;
         }
@@ -158,7 +160,7 @@ public class collisionChecker extends Main{
         if (colideToBottomBlock) {
             goDownBall = true;
         }
-
+        return 0;
     }
 
 
