@@ -421,6 +421,8 @@ private GameLoaderSaver gameLoaderSaver;
         collisionChecker.setPhysicsToBall();
 
 
+        xBall += collisionChecker.vX;
+
         if (time - goldTime > 5000) {
             ball.setFill(new ImagePattern(new Image("ball.png")));
             root.getStyleClass().remove("goldRoot");
@@ -441,6 +443,13 @@ private GameLoaderSaver gameLoaderSaver;
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
 
+        yBall += collisionChecker.vY;
+
+        // Update the position of the ball in the scene
+        Platform.runLater(() -> {
+            ball.setCenterX(xBall);
+            ball.setCenterY(yBall);
+        });
         //System.out.println("time is:" + time + " goldTime is " + goldTime);
 
     }
