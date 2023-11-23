@@ -421,7 +421,7 @@ private GameLoaderSaver gameLoaderSaver;
         collisionChecker.setPhysicsToBall();
 
 
-        xBall += collisionChecker.vX;//added
+        xBall = collisionChecker.xBall;//added
 
         if (time - goldTime > 5000) {
             ball.setFill(new ImagePattern(new Image("ball.png")));
@@ -443,7 +443,7 @@ private GameLoaderSaver gameLoaderSaver;
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
 
-        yBall += collisionChecker.vY;//added
+        yBall = collisionChecker.yBall;//added
 
         // Update the position of the ball in the scene
         Platform.runLater(() -> {

@@ -1,7 +1,6 @@
 package brickGame;
 
-public class collisionChecker extends Main{
-
+public class collisionChecker extends Main {
 
     public boolean goDownBall                  = true;
     public boolean goRightBall                 = true;
@@ -31,8 +30,101 @@ public class collisionChecker extends Main{
     }
 
 
+
+
+
+    public void WallCollide(){
+
+        if (xBall >= sceneWidth) {
+            resetColideFlags();
+            //vX = 1.000;
+            colideToRightWall = true;
+        }
+
+        if (xBall <= 0) {
+            resetColideFlags();
+            //vX = 1.000;
+            colideToLeftWall = true;
+        }
+
+        if (colideToBreak) {
+            if (colideToBreakAndMoveToRight) {
+                goRightBall = true;
+            } else {
+                goRightBall = false;
+            }
+        }
+
+        if (colideToRightWall) {
+            goRightBall = false;
+        }
+
+        if (colideToLeftWall) {
+            goRightBall = true;
+        }
+
+    }
+
+    public void BreakerCollide(){
+
+        if (yBall >= yBreak - ballRadius) {
+            //System.out.println("Colide1");
+            if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
+                hitTime = time;
+                resetColideFlags();
+                colideToBreak = true;
+                goDownBall = false;
+
+                double relation = (xBall - centerBreakX) / (breakWidth / 2);
+
+                if (Math.abs(relation) <= 0.3) {
+                    //vX = 0;
+                    vX = Math.abs(relation);
+                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
+                    vX = (Math.abs(relation) * 1.5) + (level / 3.500);
+                    //System.out.println("vX " + vX);
+                } else {
+                    vX = (Math.abs(relation) * 2) + (level / 3.500);
+                    //System.out.println("vX " + vX);
+                }
+
+                if (xBall - centerBreakX > 0) {
+                    colideToBreakAndMoveToRight = true;
+                } else {
+                    colideToBreakAndMoveToRight = false;
+                }
+                //System.out.println("Colide2");
+            }
+        }
+
+
+
+    }
+
+    public void BlockCollide(){
+        if (colideToRightBlock) {
+            goRightBall = true;
+        }
+
+        if (colideToLeftBlock) {
+            goRightBall = true;
+        }
+
+        if (colideToTopBlock) {
+            goDownBall = false;
+        }
+
+        if (colideToBottomBlock) {
+            goDownBall = true;
+        }
+
+    }
+
     public void setPhysicsToBall() {
         //v = ((time - hitTime) / 1000.000) + 1.000;
+        WallCollide();
+        BreakerCollide();//changed to redefine if change
+        BlockCollide();
 
         if (goDownBall) {
             yBall += vY;
@@ -67,102 +159,9 @@ public class collisionChecker extends Main{
             }
             //return;
         }
-        WallCollide();
-        BreakerCollide();
-        BlockCollide();
+
 
 
     }
-
-
-    public int WallCollide(){
-
-        if (xBall >= sceneWidth) {
-            resetColideFlags();
-            //vX = 1.000;
-            colideToRightWall = true;
-        }
-
-        if (xBall <= 0) {
-            resetColideFlags();
-            //vX = 1.000;
-            colideToLeftWall = true;
-        }
-
-        if (colideToBreak) {
-            if (colideToBreakAndMoveToRight) {
-                goRightBall = true;
-            } else {
-                goRightBall = false;
-            }
-        }
-
-        if (colideToRightWall) {
-            goRightBall = false;
-        }
-
-        if (colideToLeftWall) {
-            goRightBall = true;
-        }
-
-        return 0;
-    }
-
-    public int BreakerCollide(){
-
-        if (yBall >= yBreak - ballRadius) {
-            //System.out.println("Colide1");
-            if (xBall >= xBreak && xBall <= xBreak + breakWidth) {
-                hitTime = time;
-                resetColideFlags();
-                colideToBreak = true;
-                goDownBall = false;
-
-                double relation = (xBall - centerBreakX) / (breakWidth / 2);
-
-                if (Math.abs(relation) <= 0.3) {
-                    //vX = 0;
-                    vX = Math.abs(relation);
-                } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                    vX = (Math.abs(relation) * 1.5) + (level / 3.500);
-                    //System.out.println("vX " + vX);
-                } else {
-                    vX = (Math.abs(relation) * 2) + (level / 3.500);
-                    //System.out.println("vX " + vX);
-                }
-
-                if (xBall - centerBreakX > 0) {
-                    colideToBreakAndMoveToRight = true;
-                } else {
-                    colideToBreakAndMoveToRight = false;
-                }
-                //System.out.println("Colide2");
-            }
-        }
-
-
-        return 0;
-    }
-
-    public int BlockCollide(){
-        if (colideToRightBlock) {
-            goRightBall = true;
-        }
-
-        if (colideToLeftBlock) {
-            goRightBall = true;
-        }
-
-        if (colideToTopBlock) {
-            goDownBall = false;
-        }
-
-        if (colideToBottomBlock) {
-            goDownBall = true;
-        }
-        return 0;
-    }
-
-
 
 }//new class
