@@ -159,7 +159,6 @@ private GameLoaderSaver gameLoaderSaver;
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        if (loadFromSave == false) {
             if (level > 0 && level < 18) {//changed condition
                 load.setVisible(false);
                 newGame.setVisible(false);
@@ -170,7 +169,7 @@ private GameLoaderSaver gameLoaderSaver;
             }
 
 
-
+// removed loadfromsave condition
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -183,7 +182,7 @@ private GameLoaderSaver gameLoaderSaver;
                     newGame.setVisible(false);
                 }
             });
-        } else {
+
             load.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -192,19 +191,22 @@ private GameLoaderSaver gameLoaderSaver;
 
                     load.setVisible(false);
                     newGame.setVisible(false);
+
+                    engine = new GameEngine();
+                    engine.setOnAction(Main.this);
+                    engine.setFps(120);
+                    engine.start();
+                    loadFromSave = false;
+
                 }
             });//moved to the right spot
 
 
-            engine = new GameEngine();
-            engine.setOnAction(this);
-            engine.setFps(120);
-            engine.start();
-            loadFromSave = false;
-        }
-
 
     }
+
+
+
 
     public void saveGame() {
         GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
@@ -248,9 +250,7 @@ private GameLoaderSaver gameLoaderSaver;
 
 
                 break;
-            case DOWN:
-                //setPhysicsToBall();
-                break;
+//removed DOWN
             case S:
                 saveGame();
                 break;
@@ -357,7 +357,7 @@ private GameLoaderSaver gameLoaderSaver;
         });
 
 
-        if (yBall >= Block.getPaddingTop() && yBall <= (Block.getHeight() * (level + 1)) + Block.getPaddingTop()) {
+        if (yBall >= Block.getPaddingTop() && yBall <= ((Block.getHeight() * (level + 1)) + Block.getPaddingTop())) {//added bracket
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(xBall, yBall);
                 if (hitCode != Block.NO_HIT) {
