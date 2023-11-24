@@ -5,10 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 //import sun.plugin2.message.Message;
 
-public class Score {
-    public void show(final double x, final double y, int score, final Main main) {
+public class Score extends Main{
+    public void show(final double x, final double y, int score, Pane root) {
         String sign;
         if (score >= 0) {
             sign = "+";
@@ -22,7 +23,7 @@ public class Score {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                root.getChildren().add(label);
             }
         });
 
@@ -51,7 +52,7 @@ public class Score {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                main.root.getChildren().add(label);
+                root.getChildren().add(label);
             }
         });
 

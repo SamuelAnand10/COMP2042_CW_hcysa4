@@ -150,7 +150,7 @@ public class collisionChecker extends Main {
             if (!isGoldStauts) {
                 //TODO gameover
                 heart--;
-                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, this);
+                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
 
                 if (heart == 0) {
                     new Score().showGameOver(this);

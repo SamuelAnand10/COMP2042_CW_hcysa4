@@ -111,25 +111,12 @@ private GameLoaderSaver gameLoaderSaver;
          board = new Board();//assigned class
         collisionChecker = new collisionChecker();//assigned class
 
-        if (loadFromSave == false) {
-            level++;
-            if (level >1){
-                new Score().showMessage("Level Up :)", this);
-            }
-            if (level == 18) {
-                new Score().showWin(this);
-                return;
-            }
+        BALL.initBall(sceneWidth,sceneHeigt);
 
-            BALL.initBall(sceneWidth,sceneHeigt);
+        aBreak.initBreak();
 
-            aBreak.initBreak();
+        board.initBoard();//initialized all
 
-            board.initBoard();//initialized all
-
-
-
-        }
 
 
 
@@ -295,7 +282,14 @@ private GameLoaderSaver gameLoaderSaver;
                     hitTime = 0;
                     time = 0;
                     goldTime = 0;
-
+                    level++;
+                    if (level >1){
+                        new Score().showMessage("Level Up :)", Main.this);
+                    }
+                    if (level == 18) {
+                        new Score().showWin(Main.this);
+                        return;
+                    }
                     engine.stop();
                     blocks.clear();
                     chocos.clear();
@@ -363,7 +357,7 @@ private GameLoaderSaver gameLoaderSaver;
                 if (hitCode != Block.NO_HIT) {
                     score += 1;
 
-                    new Score().show(block.x, block.y, 1, this);
+                    new Score().show(block.x, block.y, 1, root);
 
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
@@ -442,7 +436,7 @@ private GameLoaderSaver gameLoaderSaver;
                 choco.taken = true;
                 choco.choco.setVisible(false);
                 score += 3;
-                new Score().show(choco.x, choco.y, 3, this);
+                new Score().show(choco.x, choco.y, 3,root);
             }
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
