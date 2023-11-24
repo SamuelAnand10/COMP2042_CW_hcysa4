@@ -139,9 +139,10 @@ private GameLoaderSaver gameLoaderSaver;
         levelLabel.setTranslateY(20);
         heartLabel = new Label("Heart : " + heart);
         heartLabel.setTranslateX(sceneWidth - 70);
+        ball = BALL.returnBall();//new assign
+        rect = aBreak.returnRect();//new assign
         if (loadFromSave == false) {
-            ball = BALL.returnBall();//new assign
-            rect = aBreak.returnRect();//new assign
+
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
         } else {
             root.getChildren().addAll(rect,ball, scoreLabel, heartLabel, levelLabel);
@@ -159,7 +160,7 @@ private GameLoaderSaver gameLoaderSaver;
         primaryStage.show();
 
         if (loadFromSave == false) {
-            if (level > 1 && level < 18) {
+            if (level > 0 && level < 18) {//changed condition
                 load.setVisible(false);
                 newGame.setVisible(false);
                 engine = new GameEngine();
@@ -168,16 +169,7 @@ private GameLoaderSaver gameLoaderSaver;
                 engine.start();
             }
 
-            load.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
-                    gameLoaderSaver.loadGame(Main.this);
 
-                    load.setVisible(false);
-                    newGame.setVisible(false);
-                }
-            });
 
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -192,6 +184,18 @@ private GameLoaderSaver gameLoaderSaver;
                 }
             });
         } else {
+            load.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
+                    gameLoaderSaver.loadGame(Main.this);
+
+                    load.setVisible(false);
+                    newGame.setVisible(false);
+                }
+            });//moved to the right spot
+
+
             engine = new GameEngine();
             engine.setOnAction(this);
             engine.setFps(120);

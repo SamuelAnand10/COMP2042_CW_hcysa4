@@ -122,8 +122,9 @@ public class collisionChecker extends Main {
 
     public void setPhysicsToBall() {
         //v = ((time - hitTime) / 1000.000) + 1.000;
+        BreakerCollide();
         WallCollide();
-        BreakerCollide();//changed to redefine if change
+       //changed to redefine if change
         BlockCollide();
 
         if (goDownBall) {
