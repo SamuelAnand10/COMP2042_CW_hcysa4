@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 public class Score extends Main{
     public void show(final double x, final double y, int score, Pane root) {
         String sign;
-        if (score >= 0) {
+        if (score > 0) {//changed condition
             sign = "+";
         } else {
             sign = "";
@@ -42,9 +42,10 @@ public class Score extends Main{
                 }
             }
         }).start();
+
     }
 
-    public void showMessage(String message, final Main main) {
+    public void showMessage(String message, Pane root) {
         final Label label = new Label(message);
         label.setTranslateX(220);
         label.setTranslateY(340);

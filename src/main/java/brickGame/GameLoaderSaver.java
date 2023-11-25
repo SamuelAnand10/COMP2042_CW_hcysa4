@@ -60,7 +60,7 @@ public class GameLoaderSaver extends Ball {
 
                 outputStream.writeObject(blockSerializables);
 
-                new Score().showMessage("Game Saved", null); // Update this part accordingly
+                new Score().showMessage("Game Saved", root); // Update this part accordingly
 
             } catch (IOException e) {
                 e.printStackTrace();

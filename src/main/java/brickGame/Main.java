@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 private GameLoaderSaver gameLoaderSaver;
-    public int level = 0;
+    public int level = 0;// chnage from 0 to 1
 
     public double xBreak = 0.0f;
     public double centerBreakX;
@@ -119,8 +119,15 @@ private GameLoaderSaver gameLoaderSaver;
 
 
 
-
-
+        if (level > 0 && level < 18) {//changed condition
+            load.setVisible(false);
+            newGame.setVisible(false);
+            engine = new GameEngine();
+            engine.setOnAction(this);
+            engine.setFps(120);
+            engine.start();
+        }
+        level++;
         scoreLabel = new Label("Score: " + score);
         levelLabel = new Label("Level: " + level);
         levelLabel.setTranslateY(20);
@@ -128,6 +135,7 @@ private GameLoaderSaver gameLoaderSaver;
         heartLabel.setTranslateX(sceneWidth - 70);
         ball = BALL.returnBall();//new assign
         rect = aBreak.returnRect();//new assign
+
         if (loadFromSave == false) {
 
             root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
@@ -146,20 +154,15 @@ private GameLoaderSaver gameLoaderSaver;
         primaryStage.setScene(scene);
         primaryStage.show();
 
-            if (level > 0 && level < 18) {//changed condition
-                load.setVisible(false);
-                newGame.setVisible(false);
-                engine = new GameEngine();
-                engine.setOnAction(this);
-                engine.setFps(120);
-                engine.start();
-            }
+
 
 
 // removed loadfromsave condition
             newGame.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+
+
                     engine = new GameEngine();
                     engine.setOnAction(Main.this);
                     engine.setFps(120);
@@ -282,9 +285,8 @@ private GameLoaderSaver gameLoaderSaver;
                     hitTime = 0;
                     time = 0;
                     goldTime = 0;
-                    level++;
                     if (level >1){
-                        new Score().showMessage("Level Up :)", Main.this);
+                        new Score().showMessage("Level Up :)", root);
                     }
                     if (level == 18) {
                         new Score().showWin(Main.this);
