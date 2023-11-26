@@ -258,7 +258,7 @@ private GameLoaderSaver gameLoaderSaver;
 
 
     private void checkDestroyedCount() {
-        if (destroyedBlockCount == blocks.size()) {
+        if (destroyedBlockCount == blocks.size() && destroyedBlockCount != 0) {//added second condition
             //TODO win level todo...
             //System.out.println("You Win");
 
