@@ -423,12 +423,8 @@ private GameLoaderSaver gameLoaderSaver;
     public void onPhysicsUpdate() {
         checkDestroyedCount();
         collisionChecker.setPhysicsToBall();
-        if(heartChanged) {
-            Platform.runLater(() -> {
-                heartLabel.setText("Heart: " + heart);//added update for heartLabel
-            });
-            heartChanged = false;
-        }//added condition
+        //added condition
+        //added new condition
         xBall = collisionChecker.xBall;//added
 
         if (time - goldTime > 5000) {
@@ -455,6 +451,13 @@ private GameLoaderSaver gameLoaderSaver;
 
         // Update the position of the ball in the scene
         Platform.runLater(() -> {
+            if(heartChanged){
+            heart--;
+            heartChanged = false;
+            heartLabel.setText("Heart :" + heart);
+            System.out.println(heart);
+        }
+
             ball.setCenterX(xBall);
             ball.setCenterY(yBall);
         });

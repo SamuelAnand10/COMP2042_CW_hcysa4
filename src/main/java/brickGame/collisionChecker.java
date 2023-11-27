@@ -143,26 +143,23 @@ public class collisionChecker extends Main {
         }
 
         if (yBall <= 0) {
-            //vX = 1.000;
+            vX = 1.000;//reset vX
             resetColideFlags();
             goDownBall = true;
             return;
         }
         if (yBall >= sceneHeigt) {
             goDownBall = false;
+            vX = 1.000;//reset vX
             if (!isGoldStauts) {
                 //TODO gameover
-
-
                 if (heart == 0) {
                     new Score().showGameOver(this);
                     engine.stop();
                 }
                 else{
-                heart--;
-
+                heartChanged = true;
                 new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
-                heartChanged = true;//added flag value
 
                 }//fixed else
 

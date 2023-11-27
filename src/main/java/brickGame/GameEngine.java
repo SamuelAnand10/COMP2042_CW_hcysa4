@@ -1,6 +1,5 @@
 package brickGame;
 
-
 public class GameEngine {
 
     private OnAction onAction;
@@ -9,49 +8,43 @@ public class GameEngine {
     private Thread physicsThread;
     public boolean isStopped = true;
 
-    public void setOnAction(Main onAction) {
+    public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
 
     /**
-     * @param fps set fps and we convert it to millisecond
+     * @param fps set fps and convert it to milliseconds
      */
     public void setFps(int fps) {
-        this.fps = (int) 1000 / fps;
+        this.fps = 1000 / fps;
     }
 
-    private synchronized void Update() {
-        updateThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!updateThread.isInterrupted()) {
-                    try {
-                        onAction.onUpdate();
-                        Thread.sleep(fps);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    private synchronized void update() {
+        updateThread = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                try {
+                    onAction.onUpdate();
+                    Thread.sleep(fps);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();//handles interrupt now
                 }
             }
         });
         updateThread.start();
     }
 
-    private void Initialize() {
+    private void initialize() {
         onAction.onInit();
     }
 
-    private synchronized void PhysicsCalculation() {
-        physicsThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!physicsThread.isInterrupted()) {
-                    try {
-                        onAction.onPhysicsUpdate();
-                        Thread.sleep(fps);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    private synchronized void physicsCalculation() {
+        physicsThread = new Thread(() -> {
+            while (!Thread.interrupted()) {
+                try {
+                    onAction.onPhysicsUpdate();
+                    Thread.sleep(fps);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();//handles interrupt now
                 }
             }
         });
@@ -59,13 +52,12 @@ public class GameEngine {
         physicsThread.start();
     }
 
-
     public void start() {
         time = 0;
-        Initialize();
-        Update();
-        PhysicsCalculation();
-        TimeStart();
+        initialize();
+        update();
+        physicsCalculation();
+        timeStart();
         isStopped = false;
     }
 
@@ -82,24 +74,20 @@ public class GameEngine {
 
     private Thread timeThread;
 
-    private void TimeStart() {
-        timeThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        time++;
-                        onAction.onTime(time);
-                        Thread.sleep(1);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    private void timeStart() {
+        timeThread = new Thread(() -> {
+            try {
+                while (true) {
+                    time++;
+                    onAction.onTime(time);
+                    Thread.sleep(1);
                 }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();//handles interrupt now
             }
         });
         timeThread.start();
     }
-
 
     public interface OnAction {
         void onUpdate();
