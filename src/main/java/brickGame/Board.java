@@ -21,6 +21,7 @@ public class Board extends Main{
                         isExistHeartBlock = true;
                     } else {
                         type = Block.BLOCK_NORMAL;
+
                     }
                 } else if (r % 10 == 3) {
                     type = Block.BLOCK_STAR;

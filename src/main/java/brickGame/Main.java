@@ -47,6 +47,8 @@ private GameLoaderSaver gameLoaderSaver;
     public boolean isGoldStauts      = false;
     public boolean isExistHeartBlock = false;
 
+    public boolean heartChanged = false;//added flag value
+
     public Rectangle rect;
     public int       ballRadius = 10;
 
@@ -79,9 +81,9 @@ private GameLoaderSaver gameLoaderSaver;
             Color.TOMATO,
             Color.TAN,
     };
-    public  Pane             root;
+    public Pane root;
     private Label            scoreLabel;
-    private Label            heartLabel;
+    public Label            heartLabel;
     private Label            levelLabel;
 
     public boolean loadFromSave = false;
@@ -274,6 +276,7 @@ private GameLoaderSaver gameLoaderSaver;
                 try {
                     collisionChecker.vX = 1.000;
 
+
                     engine.stop();
                     collisionChecker.resetColideFlags();
                     collisionChecker.goDownBall = true;
@@ -292,7 +295,7 @@ private GameLoaderSaver gameLoaderSaver;
                         new Score().showWin(Main.this);
                         return;
                     }
-                    engine.stop();
+                //removed engine.stop duplicate
                     blocks.clear();
                     chocos.clear();
                     destroyedBlockCount = 0;
@@ -353,13 +356,14 @@ private GameLoaderSaver gameLoaderSaver;
         });
 
 
+
         if (yBall >= Block.getPaddingTop() && yBall <= ((Block.getHeight() * (level + 1)) + Block.getPaddingTop())) {//added bracket
             for (final Block block : blocks) {
                 int hitCode = block.checkHitToBlock(xBall, yBall);
                 if (hitCode != Block.NO_HIT) {
                     score += 1;
 
-                    new Score().show(block.x, block.y, 1, root);
+                    new Score().show(block.x, block.y, 1,root);
 
                     block.rect.setVisible(false);
                     block.isDestroyed = true;
@@ -419,8 +423,12 @@ private GameLoaderSaver gameLoaderSaver;
     public void onPhysicsUpdate() {
         checkDestroyedCount();
         collisionChecker.setPhysicsToBall();
-
-
+        if(heartChanged) {
+            Platform.runLater(() -> {
+                heartLabel.setText("Heart: " + heart);//added update for heartLabel
+            });
+            heartChanged = false;
+        }//added condition
         xBall = collisionChecker.xBall;//added
 
         if (time - goldTime > 5000) {

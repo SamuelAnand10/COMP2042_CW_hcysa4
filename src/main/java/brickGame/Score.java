@@ -1,119 +1,103 @@
 package brickGame;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-//import sun.plugin2.message.Message;
+import javafx.util.Duration;
 
-public class Score extends Main{
+public class Score extends Main {
+
+    // Method to show a score label with animation
     public void show(final double x, final double y, int score, Pane root) {
-        String sign;
-        if (score > 0) {//changed condition
-            sign = "+";
-        } else {
-            sign = "";
-        }
+        // Determine sign based on the score
+        String sign = (score > 0) ? "+" : "";
+        // Create a label with the score and set its initial position
         final Label label = new Label(sign + score);
         label.setTranslateX(x);
         label.setTranslateY(y);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                root.getChildren().add(label);
-            }
-        });
+        // Run on JavaFX thread to update UI
+        Platform.runLater(() -> root.getChildren().add(label));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 21; i++) {
-                    try {
-                        label.setScaleX(i);
-                        label.setScaleY(i);
-                        label.setOpacity((20 - i) / 20.0);
-                        Thread.sleep(15);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        // Create and play a fade transition for the label
+        FadeTransition fade = new FadeTransition(Duration.millis(1000), label);
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setCycleCount(1);
+        fade.play();
 
+        // Create and play a scale transition for the label
+        ScaleTransition scale = new ScaleTransition(Duration.millis(1000), label);
+        scale.setToX(2.0);
+        scale.setToY(2.0);
+        scale.setCycleCount(1);
+        scale.play();
     }
 
+    // Method to show a message label with animation
     public void showMessage(String message, Pane root) {
+        // Create a label with the message and set its initial position
         final Label label = new Label(message);
         label.setTranslateX(220);
         label.setTranslateY(340);
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                root.getChildren().add(label);
-            }
-        });
+        // Run on JavaFX thread to update UI
+        synchronized (root){
+        Platform.runLater(() -> root.getChildren().add(label));}
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 21; i++) {
-                    try {
-                        label.setScaleX(Math.abs(i-10));
-                        label.setScaleY(Math.abs(i-10));
-                        label.setOpacity((20 - i) / 20.0);
-                        Thread.sleep(15);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
+        // Create and play a fade transition for the label
+        FadeTransition fade = new FadeTransition(Duration.millis(1000), label);
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setCycleCount(1);
+        fade.play();
+
+        // Create and play a scale transition for the label
+        ScaleTransition scale = new ScaleTransition(Duration.millis(1000), label);
+        scale.setToX(2.0);
+        scale.setToY(2.0);
+        scale.setCycleCount(1);
+        scale.play();
     }
 
+    // Method to show a game over message with a restart button
     public void showGameOver(final Main main) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Label label = new Label("Game Over :(");
-                label.setTranslateX(200);
-                label.setTranslateY(250);
-                label.setScaleX(2);
-                label.setScaleY(2);
+        // Run on JavaFX thread to update UI
+        Platform.runLater(() -> {
+            // Create a "Game Over" label
+            Label label = new Label("Game Over :(");
+            label.setTranslateX(200);
+            label.setTranslateY(250);
+            label.setScaleX(2);
+            label.setScaleY(2);
 
-                Button restart = new Button("Restart");
-                restart.setTranslateX(220);
-                restart.setTranslateY(300);
-                restart.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        main.restartGame();
-                    }
-                });
+            // Create a restart button
+            Button restart = new Button("Restart");
+            restart.setTranslateX(220);
+            restart.setTranslateY(300);
+            restart.setOnAction(event -> main.restartGame());
 
-                main.root.getChildren().addAll(label, restart);
-
-            }
+            // Add the label and button to the root
+            main.root.getChildren().addAll(label, restart);
         });
     }
 
+    // Method to show a "You Win" message
     public void showWin(final Main main) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Label label = new Label("You Win :)");
-                label.setTranslateX(200);
-                label.setTranslateY(250);
-                label.setScaleX(2);
-                label.setScaleY(2);
+        // Run on JavaFX thread to update UI
+        Platform.runLater(() -> {
+            // Create a "You Win" label
+            Label label = new Label("You Win :)");
+            label.setTranslateX(200);
+            label.setTranslateY(250);
+            label.setScaleX(2);
+            label.setScaleY(2);
 
-
-                main.root.getChildren().addAll(label);
-
-            }
+            // Add the label to the root
+            main.root.getChildren().addAll(label);
         });
     }
 }

@@ -1,5 +1,8 @@
 package brickGame;
 
+import javafx.application.Platform;
+import javafx.scene.control.Label;
+
 public class collisionChecker extends Main {
 
     public boolean goDownBall                  = true;
@@ -149,16 +152,22 @@ public class collisionChecker extends Main {
             goDownBall = false;
             if (!isGoldStauts) {
                 //TODO gameover
-                heart--;
-                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
+
 
                 if (heart == 0) {
                     new Score().showGameOver(this);
                     engine.stop();
                 }
+                else{
+                heart--;
+
+                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
+                heartChanged = true;//added flag value
+
+                }//fixed else
 
             }
-            //return;
+
         }
 
 
