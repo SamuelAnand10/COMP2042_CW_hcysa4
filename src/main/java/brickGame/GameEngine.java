@@ -19,7 +19,7 @@ public class GameEngine {
         this.fps = 1000 / fps;
     }
 
-    private synchronized void update() {
+    private  void update() {
         updateThread = new Thread(() -> {
             while (!Thread.interrupted()) {
                 try {
@@ -37,7 +37,7 @@ public class GameEngine {
         onAction.onInit();
     }
 
-    private synchronized void physicsCalculation() {
+    private void physicsCalculation() {
         physicsThread = new Thread(() -> {
             while (!Thread.interrupted()) {
                 try {
@@ -55,8 +55,8 @@ public class GameEngine {
     public void start() {
         time = 0;
         initialize();
-        update();
         physicsCalculation();
+        update();
         timeStart();
         isStopped = false;
     }

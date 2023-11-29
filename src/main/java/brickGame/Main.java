@@ -220,34 +220,28 @@ private GameLoaderSaver gameLoaderSaver;
 
     @Override
     public void handle(KeyEvent event) {
-        double flag;
         switch (event.getCode()) {
-
             case LEFT:
-
-                flag = aBreak.move(Break.LEFT);
-                if(flag != 0){
-                    xBreak = flag;
-                }
-
+                moveBreaker(-10); // Move left
                 break;
-
             case RIGHT:
-
-                flag = aBreak.move(Break.RIGHT);
-                if(flag != 0){
-                    xBreak = flag;
-                }
-
-
-
+                moveBreaker(10); // Move right
                 break;
-//removed DOWN
             case S:
                 saveGame();
                 break;
         }
     }
+
+    private void moveBreaker(int deltaX) {
+        double newX = xBreak + deltaX;
+        if (newX >= 0 && newX + breakWidth <= sceneWidth) {
+            xBreak = newX;
+            centerBreakX = xBreak + halfBreakWidth;
+            aBreak.returnRect().setX(xBreak);
+        }
+    }// added a new function
+
 
 //deleted no use variable
 
@@ -275,7 +269,7 @@ private GameLoaderSaver gameLoaderSaver;
             public void run() {
                 try {
                     collisionChecker.vX = 1.000;
-
+                    collisionChecker = new collisionChecker();  // Add this line to reinitialize collisionChecker
 
                     engine.stop();
                     collisionChecker.resetColideFlags();
@@ -283,7 +277,6 @@ private GameLoaderSaver gameLoaderSaver;
 
                     isGoldStauts = false;
                     isExistHeartBlock = false;
-
 
                     hitTime = 0;
                     time = 0;
@@ -295,7 +288,7 @@ private GameLoaderSaver gameLoaderSaver;
                         new Score().showWin(Main.this);
                         return;
                     }
-                //removed engine.stop duplicate
+
                     blocks.clear();
                     chocos.clear();
                     destroyedBlockCount = 0;
@@ -307,6 +300,7 @@ private GameLoaderSaver gameLoaderSaver;
             }
         });
     }
+
 
     public void restartGame() {
 
@@ -407,6 +401,11 @@ private GameLoaderSaver gameLoaderSaver;
 
                 }
 
+                if(heartChanged){
+                    heart--;
+                    heartChanged = false;
+                }
+
                 //TODO hit to break and some work here....
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
             }
@@ -451,12 +450,7 @@ private GameLoaderSaver gameLoaderSaver;
 
         // Update the position of the ball in the scene
         Platform.runLater(() -> {
-            if(heartChanged){
-            heart--;
-            heartChanged = false;
-            heartLabel.setText("Heart :" + heart);
-            System.out.println(heart);
-        }
+
 
             ball.setCenterX(xBall);
             ball.setCenterY(yBall);
