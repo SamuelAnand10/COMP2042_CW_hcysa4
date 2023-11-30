@@ -92,7 +92,7 @@ public class GameLoaderSaver extends Ball {
         Ball ball = new Ball();
         ball.xBall = loadSave.xBall;
         ball.yBall = loadSave.yBall;
-        main.xBreak = loadSave.xBreak;
+        aBreak.xBreak = loadSave.xBreak;
         main.yBreak = loadSave.yBreak;
         main.centerBreakX = loadSave.centerBreakX;
         main.time = loadSave.time;

@@ -57,28 +57,27 @@ public class collisionChecker extends Main {
         }
     }
 
-    public void BreakerCollide() {
-        if (yBall + ballRadius >= yBreak && yBall - ballRadius <= yBreak + breakHeight) {
-            if (xBall + ballRadius >= xBreak && xBall - ballRadius <= xBreak + breakWidth) {
+    public void BreakerCollide(double xBreak) {
+        if (((yBall + ballRadius) >= yBreak) && ((yBall - ballRadius) <= (yBreak + breakHeight))) {//added brackets
+            if (((xBall + ballRadius) >= xBreak) && ((xBall - ballRadius) <= (xBreak + breakWidth))) {//added brackets
                 if (!colideToBreak) {
                     hitTime = time;
                     resetColideFlags();
                     colideToBreak = true;
                     goDownBall = false;
 
-                    double relation = (xBall - centerBreakX) / (breakWidth / 2);
+                    double relation = ((xBall - centerBreakX) / (breakWidth / 2));//added brackets
 
                     if (Math.abs(relation) <= 0.3) {
                         vX = Math.abs(relation);
                     } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                        vX = (Math.abs(relation) * 1.5) + (level / 3.500);
+                        vX = (Math.abs(relation) * 1.1) + (level / 3.500);
                     } else {
-                        vX = (Math.abs(relation) * 2) + (level / 3.500);
+                        vX = (Math.abs(relation) * 1.2) + (level / 3.500);
                     }
 
                     colideToBreakAndMoveToRight = (xBall - centerBreakX > 0);
 
-                    // Adjust the ball's position immediately after collision
 
                 }
             }
@@ -90,25 +89,32 @@ public class collisionChecker extends Main {
             int hitResult = block.checkHitToBlock(xBall, yBall);
             if (hitResult != Block.NO_HIT) {
                 resetColideFlags();
-                if (hitResult == Block.HIT_TOP || hitResult == Block.HIT_BOTTOM) {
-                    goDownBall = !goDownBall; // Reverse the vertical direction
+                if (hitResult == Block.HIT_TOP) {
+                    goDownBall = false; // Reverse the vertical direction
                 }
-                if (hitResult == Block.HIT_LEFT || hitResult == Block.HIT_RIGHT) {
-                    goRightBall = !goRightBall; // Reverse the horizontal direction
+
+                if(hitResult == Block.HIT_BOTTOM){
+                    goDownBall = true;
+                }
+                if (hitResult == Block.HIT_LEFT) {
+                    goRightBall = false; // Reverse the horizontal direction
+                }
+                if(hitResult == Block.HIT_RIGHT){
+                    goRightBall = true;
                 }
             }
         }
     }
 
-    public void setPhysicsToBall() {
+    public void setPhysicsToBall(double xBreak) {
         double originalXBall = xBall;
         double originalYBall = yBall;
 
-        BreakerCollide();
+        BreakerCollide(xBreak);
         WallCollide();
         BlockCollide();
 
-        if (checkCollision()) {
+        if (checkCollision(xBreak)) {
             xBall = originalXBall;
             yBall = originalYBall;
         }
@@ -143,11 +149,18 @@ public class collisionChecker extends Main {
         } else {
             xBall -= vX;
         }
-
-
     }
 
-    private boolean checkCollision() {
+    public double getXball(){
+     return xBall;
+    }
+
+    public double getYball(){
+        return yBall;
+    }
+
+
+    private boolean checkCollision(double xBreak) {
         for (Block block : blocks) {
             if (block.checkHitToBlock(xBall, yBall) != Block.NO_HIT) {
                 return true;

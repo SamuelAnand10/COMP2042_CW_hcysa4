@@ -23,7 +23,7 @@ public class Main extends Application implements EventHandler<KeyEvent>, GameEng
 private GameLoaderSaver gameLoaderSaver;
     public int level = 0;// chnage from 0 to 1
 
-    public double xBreak = 0.0f;
+
     public double centerBreakX;
     public double yBreak = 640.0f;
 
@@ -160,19 +160,16 @@ private GameLoaderSaver gameLoaderSaver;
 
 
 // removed loadfromsave condition
-            newGame.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
+            newGame.setOnAction(event -> {
 
 
-                    engine = new GameEngine();
-                    engine.setOnAction(Main.this);
-                    engine.setFps(120);
-                    engine.start();
+                engine = new GameEngine();
+                engine.setOnAction(Main.this);
+                engine.setFps(120);
+                engine.start();
 
-                    load.setVisible(false);
-                    newGame.setVisible(false);
-                }
+                load.setVisible(false);
+                newGame.setVisible(false);
             });
 
             load.setOnAction(new EventHandler<ActionEvent>() {
@@ -203,7 +200,7 @@ private GameLoaderSaver gameLoaderSaver;
     public void saveGame() {
         GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
 
-        gameLoaderSaver.saveGame(level, score, heart, destroyedBlockCount, xBall, yBall, xBreak, yBreak, centerBreakX,
+        gameLoaderSaver.saveGame(level, score, heart, destroyedBlockCount, xBall, yBall, aBreak.xBreak, yBreak, centerBreakX,
                 time, goldTime, collisionChecker.vX, isExistHeartBlock, isGoldStauts, collisionChecker.goDownBall, collisionChecker.goRightBall, collisionChecker.colideToBreak,
                 collisionChecker.colideToBreakAndMoveToRight, collisionChecker.colideToRightWall, collisionChecker.colideToLeftWall, collisionChecker.colideToRightBlock,
                 collisionChecker.colideToBottomBlock, collisionChecker.colideToLeftBlock, collisionChecker.colideToTopBlock, blocks);
@@ -234,11 +231,11 @@ private GameLoaderSaver gameLoaderSaver;
     }
 
     private void moveBreaker(int deltaX) {
-        double newX = xBreak + deltaX;
+        double newX = aBreak.xBreak + deltaX;//changed to class variable
         if (newX >= 0 && newX + breakWidth <= sceneWidth) {
-            xBreak = newX;
-            centerBreakX = xBreak + halfBreakWidth;
-            aBreak.returnRect().setX(xBreak);
+            aBreak.xBreak = newX;
+            centerBreakX = aBreak.xBreak + halfBreakWidth;
+            aBreak.returnRect().setX(aBreak.xBreak);
         }
     }// added a new function
 
@@ -338,7 +335,7 @@ private GameLoaderSaver gameLoaderSaver;
                 scoreLabel.setText("Score: " + score);
                 heartLabel.setText("Heart : " + heart);
 
-                rect.setX(xBreak);
+                rect.setX(aBreak.xBreak);
                 rect.setY(yBreak);
                 ball.setCenterX(xBall);
                 ball.setCenterY(yBall);
@@ -401,10 +398,18 @@ private GameLoaderSaver gameLoaderSaver;
 
                 }
 
-                if(heartChanged){
-                    heart--;
-                    heartChanged = false;
-                }
+                if (yBall >= sceneHeigt) {
+                    collisionChecker.goDownBall = false;
+                    if (!isGoldStauts) {
+                        if (heart == 0) {
+                            new Score().showGameOver(this);
+                            engine.stop();
+                        } else {
+                            heartChanged = true;
+                            new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
+                        }
+                    }
+                }//moved bottomcollision
 
                 //TODO hit to break and some work here....
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");
@@ -420,11 +425,12 @@ private GameLoaderSaver gameLoaderSaver;
 
     @Override
     public void onPhysicsUpdate() {
+        Platform.runLater(() -> {
         checkDestroyedCount();
-        collisionChecker.setPhysicsToBall();
+        collisionChecker.setPhysicsToBall(aBreak.xBreak);
         //added condition
         //added new condition
-        xBall = collisionChecker.xBall;//added
+
 
         if (time - goldTime > 5000) {
             ball.setFill(new ImagePattern(new Image("ball.png")));
@@ -436,7 +442,7 @@ private GameLoaderSaver gameLoaderSaver;
             if (choco.y > sceneHeigt || choco.taken) {
                 continue;
             }
-            if (choco.y >= yBreak && choco.y <= yBreak + breakHeight && choco.x >= xBreak && choco.x <= xBreak + breakWidth) {
+            if (choco.y >= yBreak && choco.y <= yBreak + breakHeight && choco.x >= aBreak.xBreak && choco.x <= aBreak.xBreak + breakWidth) {
                 System.out.println("You Got it and +3 score for you");
                 choco.taken = true;
                 choco.choco.setVisible(false);
@@ -446,12 +452,11 @@ private GameLoaderSaver gameLoaderSaver;
             choco.y += ((time - choco.timeCreated) / 1000.000) + 1.000;
         }
 
-        yBall = collisionChecker.yBall;//added
 
         // Update the position of the ball in the scene
-        Platform.runLater(() -> {
 
-
+            xBall = collisionChecker.getXball();//added
+            yBall = collisionChecker.getYball();//added
             ball.setCenterX(xBall);
             ball.setCenterY(yBall);
         });

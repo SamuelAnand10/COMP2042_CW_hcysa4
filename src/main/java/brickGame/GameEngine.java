@@ -1,12 +1,15 @@
 package brickGame;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class GameEngine {
 
     private OnAction onAction;
     private int fps = 15;
-    private Thread updateThread;
-    private Thread physicsThread;
-    public boolean isStopped = true;
+    private ScheduledExecutorService scheduler;
+    private boolean isStopped = true;
 
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
@@ -19,43 +22,20 @@ public class GameEngine {
         this.fps = 1000 / fps;
     }
 
-    private  void update() {
-        updateThread = new Thread(() -> {
-            while (!Thread.interrupted()) {
-                try {
-                    onAction.onUpdate();
-                    Thread.sleep(fps);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();//handles interrupt now
-                }
-            }
-        });
-        updateThread.start();
-    }
+    private void update() {
+        scheduler = Executors.newScheduledThreadPool(2);
+
+        scheduler.scheduleAtFixedRate(() -> onAction.onUpdate(), 0, fps, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(() -> onAction.onPhysicsUpdate(), 0, fps, TimeUnit.MILLISECONDS);
+    }//added a scheduler
 
     private void initialize() {
         onAction.onInit();
     }
 
-    private void physicsCalculation() {
-        physicsThread = new Thread(() -> {
-            while (!Thread.interrupted()) {
-                try {
-                    onAction.onPhysicsUpdate();
-                    Thread.sleep(fps);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();//handles interrupt now
-                }
-            }
-        });
-
-        physicsThread.start();
-    }
-
     public void start() {
         time = 0;
         initialize();
-        physicsCalculation();
         update();
         timeStart();
         isStopped = false;
@@ -64,20 +44,18 @@ public class GameEngine {
     public void stop() {
         if (!isStopped) {
             isStopped = true;
-            updateThread.interrupt();
-            physicsThread.interrupt();
+            scheduler.shutdownNow();
             timeThread.interrupt();
         }
     }
 
     private long time = 0;
-
     private Thread timeThread;
 
     private void timeStart() {
         timeThread = new Thread(() -> {
             try {
-                while (true) {
+                while (!Thread.interrupted()) {
                     time++;
                     onAction.onTime(time);
                     Thread.sleep(1);
@@ -98,5 +76,4 @@ public class GameEngine {
 
         void onTime(long time);
     }
-
 }

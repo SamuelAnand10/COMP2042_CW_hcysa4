@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class Break extends Main {
-    private double xBreak = 0.0f;
+    public double xBreak = 0.0f;
     private Rectangle rect;
 
     public void initBreak() {
