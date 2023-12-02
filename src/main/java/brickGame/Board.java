@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Board extends Main{
 
-    public void initBoard() {
+    public void initBoard(int level) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < level + 1; j++) {
                 int r = new Random().nextInt(500);

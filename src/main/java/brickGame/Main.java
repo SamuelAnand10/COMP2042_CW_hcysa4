@@ -8,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -98,6 +100,7 @@ private GameLoaderSaver gameLoaderSaver;
 
     collisionChecker collisionChecker;
 
+    private ImageView backgroundImage;
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -108,6 +111,19 @@ private GameLoaderSaver gameLoaderSaver;
         load.setTranslateY(300);
         newGame.setTranslateX(220);
         newGame.setTranslateY(340);
+
+        Image backgroundImageImage = new Image("background.jpg");  // Replace "background.jpg" with your actual image file
+        backgroundImage = new ImageView(backgroundImageImage);
+        backgroundImage.setFitWidth(400);  // Adjust width as needed
+        backgroundImage.setFitHeight(300);  // Adjust height as needed
+
+        // Set up the layout using StackPane to layer components
+        StackPane layout = new StackPane();
+        layout.getChildren().addAll(backgroundImage, root);
+        layout.getChildren().addAll(load, newGame); //Adjust height as needed
+
+        // Set up the layout using StackPane to layer components
+
          BALL = new Ball();//assigned class
          aBreak = new Break();//assigned class
          board = new Board();//assigned class
@@ -117,7 +133,7 @@ private GameLoaderSaver gameLoaderSaver;
 
         aBreak.initBreak();
 
-        board.initBoard();//initialized all
+        board.initBoard(level);//initialized all
 
 
 
@@ -148,51 +164,43 @@ private GameLoaderSaver gameLoaderSaver;
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
         }
-        Scene scene = new Scene(root, sceneWidth, sceneHeigt);
+
+        Scene scene = new Scene(layout, 400, 300);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this);
-
-        primaryStage.setTitle("Game");
+        primaryStage.setTitle("Start Screen");
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        // removed loadfromsave condition
+        newGame.setOnAction(event -> {
+            backgroundImage.setVisible(false);
+            engine = new GameEngine();
+            engine.setOnAction(Main.this);
+            engine.setFps(120);
+            engine.start();
 
+            load.setVisible(false);
+            newGame.setVisible(false);
+        });
 
+        load.setOnAction(event -> {
+            GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
+            gameLoaderSaver.loadGame(Main.this);
 
-// removed loadfromsave condition
-            newGame.setOnAction(event -> {
+            load.setVisible(false);
+            newGame.setVisible(false);
 
-
-                engine = new GameEngine();
-                engine.setOnAction(Main.this);
-                engine.setFps(120);
-                engine.start();
-
-                load.setVisible(false);
-                newGame.setVisible(false);
-            });
-
-            load.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
-                    gameLoaderSaver.loadGame(Main.this);
-
-                    load.setVisible(false);
-                    newGame.setVisible(false);
-
-                    engine = new GameEngine();
-                    engine.setOnAction(Main.this);
-                    engine.setFps(120);
-                    engine.start();
-                    loadFromSave = false;
-
-                }
-            });//moved to the right spot
-
-
-
+            engine = new GameEngine();
+            engine.setOnAction(Main.this);
+            engine.setFps(120);
+            engine.start();
+            loadFromSave = false;
+        });
     }
+
+
+
 
 
 
@@ -328,7 +336,23 @@ private GameLoaderSaver gameLoaderSaver;
 
     @Override
     public void onUpdate() {
+
+
+        if (yBall >= sceneHeigt) {
+        collisionChecker.goDownBall = false;
+        if (!isGoldStauts) {
+            if (heart == 0) {
+                new Score().showGameOver(this);
+                engine.stop();
+            } else {
+                heart--;
+                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
+            }
+        }
+    }//run heart reduction algo
         Platform.runLater(new Runnable() {
+
+
             @Override
             public void run() {
 
@@ -398,18 +422,7 @@ private GameLoaderSaver gameLoaderSaver;
 
                 }
 
-                if (yBall >= sceneHeigt) {
-                    collisionChecker.goDownBall = false;
-                    if (!isGoldStauts) {
-                        if (heart == 0) {
-                            new Score().showGameOver(this);
-                            engine.stop();
-                        } else {
-                            heartChanged = true;
-                            new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
-                        }
-                    }
-                }//moved bottomcollision
+
 
                 //TODO hit to break and some work here....
                 //System.out.println("Break in row:" + block.row + " and column:" + block.column + " hit");

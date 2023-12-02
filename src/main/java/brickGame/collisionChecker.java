@@ -38,6 +38,7 @@ public class collisionChecker extends Main {
         if (xBall <= 0) {
             resetColideFlags();
             colideToLeftWall = true;
+            xBall = 0;
         }
 
         if (colideToBreak) {
@@ -69,11 +70,11 @@ public class collisionChecker extends Main {
                     double relation = ((xBall - centerBreakX) / (breakWidth / 2));//added brackets
 
                     if (Math.abs(relation) <= 0.3) {
-                        vX = Math.abs(relation);
+                        vX = (Math.abs(relation) - 0.5);
                     } else if (Math.abs(relation) > 0.3 && Math.abs(relation) <= 0.7) {
-                        vX = (Math.abs(relation) * 1.1) + (level / 3.500);
+                        vX = (Math.abs(relation) - 0.75);
                     } else {
-                        vX = (Math.abs(relation) * 1.2) + (level / 3.500);
+                        vX = (Math.abs(relation) - 1);
                     }
 
                     colideToBreakAndMoveToRight = (xBall - centerBreakX > 0);
@@ -85,25 +86,25 @@ public class collisionChecker extends Main {
     }
 
     public void BlockCollide() {
-        for (Block block : blocks) {
-            int hitResult = block.checkHitToBlock(xBall, yBall);
-            if (hitResult != Block.NO_HIT) {
-                resetColideFlags();
-                if (hitResult == Block.HIT_TOP) {
+
+//removed resetcollide initialization
+                if (colideToTopBlock) {
                     goDownBall = false; // Reverse the vertical direction
                 }
 
-                if(hitResult == Block.HIT_BOTTOM){
+                if(colideToBottomBlock){
                     goDownBall = true;
                 }
-                if (hitResult == Block.HIT_LEFT) {
+                if (colideToLeftBlock) {
                     goRightBall = false; // Reverse the horizontal direction
                 }
-                if(hitResult == Block.HIT_RIGHT){
+                if(colideToRightBlock){
                     goRightBall = true;
+
                 }
-            }
-        }
+
+                resetColideFlags();
+
     }
 
     public void setPhysicsToBall(double xBreak) {
@@ -127,15 +128,7 @@ public class collisionChecker extends Main {
 
         if (yBall >= sceneHeigt) {
             goDownBall = false;
-            if (!isGoldStauts) {
-                if (heart == 0) {
-                    new Score().showGameOver(this);
-                    engine.stop();
-                } else {
-                    heartChanged = true;
-                    new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
-                }
-            }
+
         }
 
         if (goDownBall) {
@@ -153,11 +146,11 @@ public class collisionChecker extends Main {
 
     public double getXball(){
      return xBall;
-    }
+    }//getter
 
     public double getYball(){
         return yBall;
-    }
+    }//getter
 
 
     private boolean checkCollision(double xBreak) {

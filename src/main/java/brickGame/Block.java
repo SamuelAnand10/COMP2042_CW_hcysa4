@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class Block implements Serializable {
     private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
 
+
+
     public int row;
     public int column;
 
@@ -47,6 +49,7 @@ public class Block implements Serializable {
         this.column = column;
         this.color = color;
         this.type = type;
+
 
         draw();
     }
