@@ -2,9 +2,15 @@ package brickGame;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * The `Board` class is responsible for initializing the game board with blocks.
+ */
 public class Board extends Main{
-
+    /**
+     * Initializes the game board with blocks based on the given level.
+     *
+     * @param level The level of the game.
+     */
     public void initBoard(int level) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < level + 1; j++) {
@@ -33,6 +39,12 @@ public class Board extends Main{
             }
         }
     }
+
+    /**
+     * Returns the list of blocks on the game board.
+     *
+     * @return The list of blocks.
+     */
 public ArrayList<Block> returnBlocks(){
         return blocks;
     }//new return function

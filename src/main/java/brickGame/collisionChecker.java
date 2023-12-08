@@ -2,6 +2,10 @@ package brickGame;
 
 import javafx.application.Platform;
 
+/**
+ * The `collisionChecker` class is responsible for checking and handling collisions of the ball
+ * with the walls, breaker, and blocks. It also manages the physics of the ball movement.
+ */
 public class collisionChecker extends Main {
 
     public boolean goDownBall = true;
@@ -17,7 +21,9 @@ public class collisionChecker extends Main {
 
     public double vX = 1.000;
     public double vY = 1.000;
-
+    /**
+     * Resets all collision flags to their initial state.
+     */
     public void resetColideFlags() {
         colideToBreak = false;
         colideToBreakAndMoveToRight = false;
@@ -28,7 +34,9 @@ public class collisionChecker extends Main {
         colideToLeftBlock = false;
         colideToTopBlock = false;
     }
-
+    /**
+     * Handles collisions with walls and adjusts ball movement accordingly.
+     */
     public void WallCollide() {
         if (xBall >= sceneWidth) {
             resetColideFlags();
@@ -60,7 +68,9 @@ public class collisionChecker extends Main {
         }
     }
     }
-
+    /**
+     * Handles collisions with the breaker and adjusts ball movement accordingly.
+     */
     public void BreakerCollide(double xBreak) {
         if (((yBall + ballRadius) >= yBreak) && ((yBall - ballRadius) <= (yBreak + breakHeight))) {//added brackets
             if (((xBall + ballRadius) >= xBreak) && ((xBall - ballRadius) <= (xBreak + breakWidth))) {//added brackets
@@ -91,7 +101,9 @@ public class collisionChecker extends Main {
             }
         }
     }
-
+    /**
+     * Handles collisions with blocks and adjusts ball movement accordingly.
+     */
     public void BlockCollide() {
 
 //removed resetcollide initialization
@@ -113,7 +125,9 @@ public class collisionChecker extends Main {
                 resetColideFlags();
 
     }
-
+    /**
+     * Sets the physics for the ball movement based on collisions and updates its position.
+     */
     public void setPhysicsToBall(double xBreak, boolean resumeFlag) {
         double originalXBall = xBall;
         double originalYBall = yBall;
@@ -155,16 +169,23 @@ public class collisionChecker extends Main {
             yBall = originalYBall;
         }
     }
-
+    /**
+     * Gets the current x-coordinate of the ball.
+     */
     public double getXball(){
      return xBall;
     }//getter
-
+    /**
+     * Gets the current y-coordinate of the ball.
+     */
     public double getYball(){
         return yBall;
     }//getter
 
-
+    /**
+     * Checks for collisions with the breaker and blocks.
+     * Returns true if a collision is detected, false otherwise.
+     */
     private boolean checkCollision(double xBreak) {
         for (Block block : blocks) {
             if (block.checkHitToBlock(xBall, yBall) != Block.NO_HIT) {

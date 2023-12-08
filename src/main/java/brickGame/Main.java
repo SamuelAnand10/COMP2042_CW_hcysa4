@@ -19,7 +19,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-
+/**
+ * The main class for the Brick Game application. It extends Application, implements
+ * EventHandler for handling key events, and implements GameEngine.OnAction for game events.
+ * This class initializes the game components, manages the game state, and handles user input.
+ */
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 private GameLoaderSaver gameLoaderSaver;
@@ -106,7 +110,13 @@ private GameLoaderSaver gameLoaderSaver;
     Pane pausepane;
 
     collisionChecker collisionChecker;
-
+    /**
+     * The main entry point of the JavaFX application. It initializes the game components,
+     * sets up the user interface, and starts the game engine.
+     *
+     * @param primaryStage The primary stage for the JavaFX application.
+     * @throws Exception If an exception occurs during application startup.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
@@ -234,7 +244,11 @@ private GameLoaderSaver gameLoaderSaver;
 
     }
 
-
+    /**
+     * Creates and returns a pane for the start screen, including background and start buttons.
+     *
+     * @return A JavaFX Pane representing the start screen.
+     */
     private Pane createStartPane() {//made a create start scene function
         Pane pane = new Pane();
 
@@ -266,7 +280,11 @@ private GameLoaderSaver gameLoaderSaver;
 
         return pane;
     }
-
+    /**
+     * Creates and returns a pane for the pause screen, including background and pause buttons.
+     *
+     * @return A JavaFX Pane representing the pause screen.
+     */
     private Pane createPausePane() {//made a create pause scene function
         Pane pane = new Pane();
 
@@ -298,14 +316,20 @@ private GameLoaderSaver gameLoaderSaver;
 
         return pane;
     }
-
+    /**
+     * Pauses the game, displaying the pause screen and hiding the main game screen.
+     * Sets the resumeFlag to true, indicating that the game is in a paused state.
+     */
     public void pauseGame(){//pause function
         resumeFlag = true;
         pausepane.setVisible(true);
         root.setVisible(false);
     }
 
-
+    /**
+     * Saves the current game state, including level, score, heart count, and other parameters.
+     * Utilizes the GameLoaderSaver class to perform the actual saving process.
+     */
     public void saveGame() {
         GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
 
@@ -324,6 +348,12 @@ private GameLoaderSaver gameLoaderSaver;
         launch(args);
     }
 
+    /**
+     * Handles key events, such as moving the breaker, saving the game, and pausing the game.
+     *
+     * @param event The KeyEvent to be handled.
+     */
+
     @Override
     public void handle(KeyEvent event) {
         switch (event.getCode()) {
@@ -341,7 +371,12 @@ private GameLoaderSaver gameLoaderSaver;
                 pauseGame();
         }
     }
-
+    /**
+     * Moves the breaker (paddle) based on the given deltaX value.
+     * Ensures that the breaker remains within the scene boundaries.
+     *
+     * @param deltaX The amount to move the breaker horizontally.
+     */
     private void moveBreaker(int deltaX) {
         double newX = aBreak.xBreak + deltaX;//changed to class variable
         if (newX >= 0 && newX + breakWidth <= sceneWidth) {
@@ -361,7 +396,9 @@ private GameLoaderSaver gameLoaderSaver;
 
 
 
-
+    /**
+     * Checks if all blocks have been destroyed. If true, triggers actions for winning the level.
+     */
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size() && destroyedBlockCount != 0) {//added second condition
             //TODO win level todo...
@@ -371,7 +408,10 @@ private GameLoaderSaver gameLoaderSaver;
         }
     }
 
-
+    /**
+     * Initiates the transition to the next level of the game. Resets necessary parameters,
+     * clears the blocks, and starts the new level.
+     */
     private void nextLevel() {
         Platform.runLater(new Runnable() {
             @Override
@@ -411,7 +451,9 @@ private GameLoaderSaver gameLoaderSaver;
         });
     }
 
-
+    /**
+     * Restarts the game, resetting level, heart count, score, and other parameters.
+     */
     public void restartGame() {
 
         try {
@@ -439,7 +481,9 @@ private GameLoaderSaver gameLoaderSaver;
         }
     }
 
-
+    /**
+     * Called when an update to the game state is needed. Handles the update of score and UI elements.
+     */
     @Override
     public void onUpdate() {
 
@@ -535,12 +579,17 @@ private GameLoaderSaver gameLoaderSaver;
         }
     }
 
-
+    /**
+     * Called during the initialization phase of the game. Currently not used in this implementation.
+     */
     @Override
     public void onInit() {
 
     }
-
+    /**
+     * Called during the physics update phase of the game. Updates game physics, checks collisions,
+     * and manages bonuses such as chocos and gold balls.
+     */
     @Override
     public void onPhysicsUpdate() {
         Platform.runLater(() -> {
@@ -582,7 +631,11 @@ private GameLoaderSaver gameLoaderSaver;
 
     }
 
-
+    /**
+     * Called to update the game time. Sets the current time for game-related calculations.
+     *
+     * @param time The current game time.
+     */
     @Override
     public void onTime(long time) {
         this.time = time;

@@ -3,36 +3,47 @@ package brickGame;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * The `GameEngine` class manages the game loop and provides methods for starting and stopping
+ * the game. It utilizes a scheduler for updating and running physics at a fixed rate.
+ */
 public class GameEngine {
 
     private OnAction onAction;
     private int fps = 15;
     private ScheduledExecutorService scheduler;
     private boolean isStopped = true;
-
+    /**
+     * Sets the listener for various game actions.
+     */
     public void setOnAction(OnAction onAction) {
         this.onAction = onAction;
     }
-
     /**
-     * @param fps set fps and convert it to milliseconds
+     * Sets the frames per second (fps) and converts it to milliseconds.
+     * @param fps;
      */
     public void setFps(int fps) {
         this.fps = 1000 / fps;
     }
-
+    /**
+     * Updates the game loop using a scheduler for rendering and physics updates.
+     */
     private void update() {
         scheduler = Executors.newScheduledThreadPool(2);
 
         scheduler.scheduleAtFixedRate(() -> onAction.onUpdate(), 0, fps, TimeUnit.MILLISECONDS);
         scheduler.scheduleAtFixedRate(() -> onAction.onPhysicsUpdate(), 0, fps, TimeUnit.MILLISECONDS);
     }//added a scheduler
-
+    /**
+     * Initializes the game by calling the `onInit` method of the listener.
+     */
     private void initialize() {
         onAction.onInit();
     }
-
+    /**
+     * Starts the game loop, initializes the game, and starts the time tracking.
+     */
     public void start() {
         time = 0;
         initialize();
@@ -40,7 +51,9 @@ public class GameEngine {
         timeStart();
         isStopped = false;
     }
-
+    /**
+     * Stops the game loop, shuts down the scheduler, and interrupts the time tracking thread.
+     */
     public void stop() {
         if (!isStopped) {
             isStopped = true;
@@ -51,7 +64,9 @@ public class GameEngine {
 
     private long time = 0;
     private Thread timeThread;
-
+    /**
+     * Starts a separate thread to track game time and calls the `onTime` method of the listener.
+     */
     private void timeStart() {
         timeThread = new Thread(() -> {
             try {
@@ -66,7 +81,10 @@ public class GameEngine {
         });
         timeThread.start();
     }
-
+    /**
+     * The `OnAction` interface defines methods that can be implemented by the listener to
+     * respond to various game events.
+     */
     public interface OnAction {
         void onUpdate();
 

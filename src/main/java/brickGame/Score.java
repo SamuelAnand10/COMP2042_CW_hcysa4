@@ -11,9 +11,22 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+/**
+ * The Score class provides methods for displaying score-related messages and animations
+ * within the Brick Game application. It extends the functionality of the Main class to handle
+ * UI elements such as labels and buttons for various in-game situations.
+ */
 public class Score extends Main {
 
     // Method to show a score label with animation
+    /**
+     * Displays a score label with animation at the specified position on the screen.
+     *
+     * @param x     The X-coordinate for the label.
+     * @param y     The Y-coordinate for the label.
+     * @param score The score value to be displayed.
+     * @param root  The JavaFX Pane to which the label will be added.
+     */
     public void show(final double x, final double y, int score, Pane root) {
         // Determine sign based on the score
         String sign = (score > 0) ? "+" : "";
@@ -41,6 +54,12 @@ public class Score extends Main {
     }
 
     // Method to show a message label with animation
+    /**
+     * Displays a message label with animation at a predefined position on the screen.
+     *
+     * @param message The message to be displayed.
+     * @param root    The JavaFX Pane to which the label will be added.
+     */
     public void showMessage(String message, Pane root) {
         // Create a label with the message and set its initial position
         final Label label = new Label(message);
@@ -67,6 +86,11 @@ public class Score extends Main {
     }
 
     // Method to show a game over message with a restart button
+    /**
+     * Displays a "Game Over" message with a restart button.
+     *
+     * @param main The Main instance to access game-related functions.
+     */
     public void showGameOver(final Main main) {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
@@ -96,6 +120,11 @@ public class Score extends Main {
     }
 
     // Method to show a "You Win" message
+    /**
+     * Displays a "You Win" message with a restart button.
+     *
+     * @param main The Main instance to access game-related functions.
+     */
     public void showWin(final Main main) {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
