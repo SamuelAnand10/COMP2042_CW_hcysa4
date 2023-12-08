@@ -8,7 +8,7 @@
 - [JavaFX](https://openjfx.io/)
 
 ### Compilation Steps
-1. Clone the repository: `git clone https://github.com/SamuelAnand10/brick-game.git`
+1. Clone the repository: `[git clone https://github.com/SamuelAnand10/brick-game.git](https://github.com/SamuelAnand10/COMP2042_CW_hcysa4.git)`
 2. Navigate to the project directory: `cd brick-game`
 3. Compile the code: `javac -cp path/to/javafx-sdk-<version>/lib/*:. brickGame/Main.java`
 4. Run the application: `java -cp path/to/javafx-sdk-<version>/lib/*:. brickGame.Main`
