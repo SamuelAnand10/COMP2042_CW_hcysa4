@@ -5,7 +5,10 @@ import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 public class Score extends Main {
@@ -68,20 +71,27 @@ public class Score extends Main {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
             // Create a "Game Over" label
-            Label label = new Label("Game Over :(");
-            label.setTranslateX(200);
-            label.setTranslateY(250);
-            label.setScaleX(2);
-            label.setScaleY(2);
+            Image gamewinImage = new Image("champion - Copy.png");
+            ImageView gamewin = new ImageView(gamewinImage);
+            gamewin.setX(50);
+            gamewin.setY(100);
+
+            gamewin.setFitHeight(500);
+            gamewin.setFitWidth(400);
+
 
             // Create a restart button
-            Button restart = new Button("Restart");
-            restart.setTranslateX(220);
-            restart.setTranslateY(300);
-            restart.setOnAction(event -> main.restartGame());
+            Image restartImage = new Image("restart.png");
+            ImageView restart = new ImageView(restartImage);
+            restart.setFitHeight(50);
+            restart.setFitWidth(150);
+            restart.setTranslateX(175);
+            restart.setTranslateY(400);
+            restart.setOnMouseClicked(event -> main.restartGame());
 
-            // Add the label and button to the root
-            main.root.getChildren().addAll(label, restart);
+
+            // Add the label to the root
+            main.root.getChildren().addAll(gamewin, restart);
         });
     }
 
@@ -90,14 +100,27 @@ public class Score extends Main {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
             // Create a "You Win" label
-            Label label = new Label("You Win :)");
-            label.setTranslateX(200);
-            label.setTranslateY(250);
-            label.setScaleX(2);
-            label.setScaleY(2);
+            Image gamewinImage = new Image("Blue and Red Modern Illustration Game Mouse Pad.png");
+            ImageView gamewin = new ImageView(gamewinImage);
+            gamewin.setX(50);
+            gamewin.setY(100);
+
+            gamewin.setFitHeight(500);
+            gamewin.setFitWidth(400);
+
+
+            // Create a restart button
+            Image restartImage = new Image("restart.png");
+            ImageView restart = new ImageView(restartImage);
+            restart.setFitHeight(50);
+            restart.setFitWidth(150);
+            restart.setTranslateX(200);
+            restart.setTranslateY(350);
+            restart.setOnMouseClicked(event -> main.restartGame());
+
 
             // Add the label to the root
-            main.root.getChildren().addAll(label);
+            main.root.getChildren().addAll(gamewin, restart);
         });
     }
 }

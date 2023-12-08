@@ -91,39 +91,29 @@ private GameLoaderSaver gameLoaderSaver;
     public boolean loadFromSave = false;
 //made all private classes public
     Stage  primaryStage;
-    Button load;
-    Button newGame;
+    ImageView load;
+    ImageView newGame;
 
+    ImageView resume;
+
+    ImageView restart;
+
+    boolean resumeFlag = false;
     Ball BALL;
     Break aBreak;
     Board board;
 
+    Pane pausepane;
+
     collisionChecker collisionChecker;
 
-    private ImageView backgroundImage;
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
+        Pane startpane = createStartPane();
+        pausepane = createPausePane();
+        pausepane.setVisible(false);
         root = new Pane();
-        load = new Button("Load Game");
-        newGame = new Button("Start New Game");
-        load.setTranslateX(220);
-        load.setTranslateY(300);
-        newGame.setTranslateX(220);
-        newGame.setTranslateY(340);
-
-        Image backgroundImageImage = new Image("background.jpg");  // Replace "background.jpg" with your actual image file
-        backgroundImage = new ImageView(backgroundImageImage);
-        backgroundImage.setFitWidth(400);  // Adjust width as needed
-        backgroundImage.setFitHeight(300);  // Adjust height as needed
-
-        // Set up the layout using StackPane to layer components
-        StackPane layout = new StackPane();
-        layout.getChildren().addAll(backgroundImage, root);
-        layout.getChildren().addAll(load, newGame); //Adjust height as needed
-
-        // Set up the layout using StackPane to layer components
-
          BALL = new Ball();//assigned class
          aBreak = new Break();//assigned class
          board = new Board();//assigned class
@@ -153,56 +143,167 @@ private GameLoaderSaver gameLoaderSaver;
         heartLabel.setTranslateX(sceneWidth - 70);
         ball = BALL.returnBall();//new assign
         rect = aBreak.returnRect();//new assign
+        Image background;
+        ImageView backgroundView;
+        if(level <= 7){
+        background = new Image("backgroundV2.png");
+        backgroundView = new ImageView(background);
+        backgroundView.setFitWidth(500);
+        backgroundView.setFitHeight(650);
 
-        if (loadFromSave == false) {
-
-            root.getChildren().addAll(rect, ball, scoreLabel, heartLabel, levelLabel, newGame);
-        } else {
-            root.getChildren().addAll(rect,ball, scoreLabel, heartLabel, levelLabel);
         }
+        else{
+            background = new Image("backgroundV2.png");
+            backgroundView = new ImageView(background);
+            backgroundView.setFitWidth(300);
+            backgroundView.setFitHeight(4000);
+        }
+        root.getChildren().addAll(backgroundView,rect, ball, scoreLabel, heartLabel, levelLabel);
         blocks = board.returnBlocks();// new assign
         for (Block block : blocks) {
             root.getChildren().add(block.rect);
         }
-
-        Scene scene = new Scene(layout, 400, 300);
+        if(level < 2){
+        root.setVisible(false);
+        startpane.setVisible(true);}
+        else{
+            startpane.setVisible(false);
+            root.setVisible(true);
+        }
+        StackPane layout = new StackPane();//added a stack
+        layout.getChildren().addAll(startpane, root,pausepane);
+        Scene scene = new Scene(layout, sceneWidth, sceneHeigt);
         scene.getStylesheets().add("style.css");
         scene.setOnKeyPressed(this);
-        primaryStage.setTitle("Start Screen");
+
+        primaryStage.setTitle("Game");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // removed loadfromsave condition
-        newGame.setOnAction(event -> {
-            backgroundImage.setVisible(false);
-            engine = new GameEngine();
-            engine.setOnAction(Main.this);
-            engine.setFps(120);
-            engine.start();
 
-            load.setVisible(false);
-            newGame.setVisible(false);
-        });
 
-        load.setOnAction(event -> {
+
+// removed loadfromsave condition
+        newGame.setOnMouseClicked(event -> {//changed to a image on set function
+                startpane.setVisible(false);
+                root.setVisible(true);
+                engine = new GameEngine();
+
+                engine.setOnAction(Main.this);
+                engine.setFps(120);
+                engine.start();
+
+                load.setVisible(false);
+                newGame.setVisible(false);
+
+            });
+
+        load.setOnMouseClicked(mouseEvent -> {//changed to a image on click function
             GameLoaderSaver gameLoaderSaver = new GameLoaderSaver();
             gameLoaderSaver.loadGame(Main.this);
 
             load.setVisible(false);
             newGame.setVisible(false);
-
+            startpane.setVisible(false);  // Hide the start pane
+            root.setVisible(true);
             engine = new GameEngine();
             engine.setOnAction(Main.this);
             engine.setFps(120);
             engine.start();
             loadFromSave = false;
+        });//moved to the right spot
+
+        resume.setOnMouseClicked(event -> {//changed to a image on set function
+
+            pausepane.setVisible(false);  // Hide the pause pane
+            root.setVisible(true);
+            resumeFlag = false;
         });
+
+        restart.setOnMouseClicked(event -> {//changed to a image on set function
+            resumeFlag = false;
+            pausepane.setVisible(false);  // Hide the pause pane
+            try {
+                restartGame();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
+
     }
 
 
+    private Pane createStartPane() {//made a create start scene function
+        Pane pane = new Pane();
 
+        // Add background image to start pane
+        Image backgroundImageImage = new Image("Minimal Illustration Outer Space Mouse Pad.png");
+        ImageView backgroundImageView = new ImageView(backgroundImageImage);
+        backgroundImageView.setFitHeight(sceneHeigt);
+        backgroundImageView.setFitWidth(sceneWidth);
 
+        pane.getChildren().add(backgroundImageView);
 
+        // Add "Start New Game" button
+        Image newGameImage = new Image("load.png");
+        newGame = new ImageView(newGameImage);
+        newGame.setFitWidth(150);
+        newGame.setFitHeight(50);
+        newGame.setTranslateX(175);
+        newGame.setTranslateY(300);
+        pane.getChildren().add(newGame);
+
+        // Add "Load Game" button
+        Image loadImage = new Image("start.png");
+        load = new ImageView(loadImage);
+        load.setFitWidth(150);
+        load.setFitHeight(50);
+        load.setTranslateX(175);
+        load.setTranslateY(400);
+        pane.getChildren().add(load);
+
+        return pane;
+    }
+
+    private Pane createPausePane() {//made a create pause scene function
+        Pane pane = new Pane();
+
+        // Add background image to start pane
+        Image backgroundImageImage = new Image("Minimal Illustration Outer Space Mouse Pad.png");
+        ImageView backgroundImageView = new ImageView(backgroundImageImage);
+        backgroundImageView.setFitHeight(sceneHeigt);
+        backgroundImageView.setFitWidth(sceneWidth);
+
+        pane.getChildren().add(backgroundImageView);
+
+        // Add "Start New Game" button
+        Image resumeImage = new Image("resume.png");
+        resume = new ImageView(resumeImage);
+        resume.setFitWidth(150);
+        resume.setFitHeight(50);
+        resume.setTranslateX(175);
+        resume.setTranslateY(300);
+        pane.getChildren().add(resume);
+
+        // Add "Load Game" button
+        Image restartImage = new Image("restart.png");
+        restart = new ImageView(restartImage);
+        restart.setFitWidth(150);
+        restart.setFitHeight(50);
+        restart.setTranslateX(175);
+        restart.setTranslateY(400);
+        pane.getChildren().add(restart);
+
+        return pane;
+    }
+
+    public void pauseGame(){//pause function
+        resumeFlag = true;
+        pausepane.setVisible(true);
+        root.setVisible(false);
+    }
 
 
     public void saveGame() {
@@ -235,6 +336,9 @@ private GameLoaderSaver gameLoaderSaver;
             case S:
                 saveGame();
                 break;
+
+            case P:
+                pauseGame();
         }
     }
 
@@ -287,6 +391,7 @@ private GameLoaderSaver gameLoaderSaver;
                     time = 0;
                     goldTime = 0;
                     if (level >1){
+
                         new Score().showMessage("Level Up :)", root);
                     }
                     if (level == 18) {
@@ -328,6 +433,7 @@ private GameLoaderSaver gameLoaderSaver;
             chocos.clear();
 
             start(primaryStage);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -341,12 +447,11 @@ private GameLoaderSaver gameLoaderSaver;
         if (yBall >= sceneHeigt) {
         collisionChecker.goDownBall = false;
         if (!isGoldStauts) {
+            heart--;
+            new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
             if (heart == 0) {
                 new Score().showGameOver(this);
                 engine.stop();
-            } else {
-                heart--;
-                new Score().show(sceneWidth / 2, sceneHeigt / 2, -1, root);
             }
         }
     }//run heart reduction algo
@@ -440,7 +545,7 @@ private GameLoaderSaver gameLoaderSaver;
     public void onPhysicsUpdate() {
         Platform.runLater(() -> {
         checkDestroyedCount();
-        collisionChecker.setPhysicsToBall(aBreak.xBreak);
+        collisionChecker.setPhysicsToBall(aBreak.xBreak,resumeFlag);
         //added condition
         //added new condition
 

@@ -38,12 +38,12 @@ public class collisionChecker extends Main {
         if (xBall <= 0) {
             resetColideFlags();
             colideToLeftWall = true;
-            xBall = 0;
         }
 
         if (colideToBreak) {
             if (colideToBreakAndMoveToRight) {
                 goRightBall = true;
+                xBall += vX;
             } else {
                 goRightBall = false;
             }
@@ -51,11 +51,14 @@ public class collisionChecker extends Main {
 
         if (colideToRightWall) {
             goRightBall = false;
-        }
 
+        }
         if (colideToLeftWall) {
             goRightBall = true;
+            if(vX == 0){
+                vX = vX + 0.2;
         }
+    }
     }
 
     public void BreakerCollide(double xBreak) {
@@ -75,6 +78,10 @@ public class collisionChecker extends Main {
                         vX = (Math.abs(relation) - 0.75);
                     } else {
                         vX = (Math.abs(relation) - 1);
+                    }
+
+                    if(vX < 0.3){
+                        vX = vX + 0.1;
                     }
 
                     colideToBreakAndMoveToRight = (xBall - centerBreakX > 0);
@@ -107,7 +114,7 @@ public class collisionChecker extends Main {
 
     }
 
-    public void setPhysicsToBall(double xBreak) {
+    public void setPhysicsToBall(double xBreak, boolean resumeFlag) {
         double originalXBall = xBall;
         double originalYBall = yBall;
 
@@ -141,6 +148,11 @@ public class collisionChecker extends Main {
             xBall += vX;
         } else {
             xBall -= vX;
+        }
+
+        if(resumeFlag){
+            xBall = originalXBall;
+            yBall = originalYBall;
         }
     }
 
