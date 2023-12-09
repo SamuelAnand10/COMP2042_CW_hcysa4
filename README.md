@@ -122,28 +122,20 @@ All the code used was mainly taking the sub task run by main and using it for th
    -  used collisionChecker in onPhysicsUpdate() for setting the ball physics
    
    Reason:
-    
-
-### Additional Information
-
-Provide any additional context or details about the modifications.
+    All these updates were to fix the refactoring of the classes i made, as well as adding more graphics to the game such as a start screen and a background and a pause menu. 
 
 ## Unexpected Problems
-
 ### Challenges Faced
 
-1. **Challenge Description**
-   - Explain the unexpected challenge encountered.
-   - Solution: Describe how you addressed or attempted to resolve the issue.
+1. **Heart Value Updating**
+   - Heart value was not updating after hitting the bottom
+   - Solution: there was a double resetCollide() function that reset the flag variable to execute the event of heart reduction that I needed to remove.
+
+2.**breaker smoothness**
+   - The breaker was moving very riggedly, it would not update its placement, move very riggedly
+   - Solution: I implemented a local method to handle the movement instead of using another class to make the process easier
 
 ### Additional Information
 
-Include any other information about unexpected challenges or problems.
+There were many other technical issues but are too many and too minor and were quite easy to resolve.
 
-## Acknowledgements
-
-Mention any external libraries, resources, or tutorials used during the development.
-
-## License
-
-Specify the license under which your code is distributed (e.g., MIT License).
