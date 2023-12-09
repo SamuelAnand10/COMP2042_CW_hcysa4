@@ -79,22 +79,50 @@ This is exclusively the collisions of the ball and blocks. Even the heart reduct
    - Purpose: Handles initializing the breaker in the game, with its variables.
    - Location: located seperately as breaker.java in the src folder.
      
-1. *****GameLoadSaver*****
+3. *****GameLoadSaver*****
    - Purpose: Is a data preparer class that pushes data to be saved into LoadSave with the correct fetching of the instances of variables and parameters
    - additionally, it also initializes the value of a loading game into the main program
    - Location: located seperately as GameSaverLoader.java in the src folder.
+  
+4. *****collisionChecker*****
+   - Purpose:
+     CollisionChecker is a class that specifically handles the flagging of collisions of the ball and the wall, breaker and blocks. As well as the top and bottom. It is the extract of the physics of the       ball as to reflectively bounce when hitting the wall and blocks, as well as the change of x value rate of change depending on the axis hit on the breaker.
+     I've broken up the whole collision code into individual methods in the class and used a main function to run throught them all as apply the modifications to xball and yball.
+     This function is used by the the function one of the threads loops.
+     I've also implemented setter functions for the xball and yball variables as well as getter functions for the newly modified xball and yball.
+   - Location: located seperately as collisionChecker.java in the src folder.
 
 ### Additional Information
-
-Include any other relevant details about the new classes.
+All the code used was mainly taking the sub task run by main and using it for the individual classes as a means to refactor the code. Setter and getter functions were implemented but other than that only in collisionChecker was an additional a flagging function for a collsion was implemented. All classes also extends Main.java so that variables are updated in the Main.
 
 ## Modified Java Classes
 
 ### List of Modified Classes
 
-1. **ClassName**
-   - Changes: Describe the modifications made to the class.
-   - Reason: Explain why these changes were necessary.
+1. **GameEngine**
+   - Changes: I adjusted the try and catch function to instead of returning an error to handle the interrupt. Not only that but i additionally added a new method that starts PhysicsUpdate() and OnUpdate() as threads in a scheduler. 
+   - Reason: This is because the catch function did not resolve a collision in thread resources, thereby ending the engine and therefore killing the program. Therefore adding a interrupt handler was important to resolve thread collisions and resource handling. Additionally, adding the scheduler was important as resource manangment for both PhysicsUpdate() and OnUpdate() as they use the same resources. Therefore a schdeuler resolves collisions.
+
+2. **Score**
+   - Changes: I've changed as animations to Java FX modules. Additionally adding a game over image and button to restart, as well as adding a game win image and button to restart.
+   - Reason: This is because the animations were not working properly therefore I switched to using Java Fx modules for the animations. The additions were to make the game more complete.
+
+3. **Main**
+   Changes:
+   - Added a stackpane instead of having just root as a pane. In which 2 new panes: pausepane and startpane, were added
+   -  a pausepane() and a startpane() function for their respective panes to initialize an image and 2 button images. For pausepane() a restart and resume, for startpane() a new game and load game.
+   -  used the ball,breaker classes to initialize the objects.
+   -  Imported an image for the background of the game. After level 7 it changes
+   -  image OnMouseClick() events for the startpane() and Pausepane() button events
+   -  used a resumeFlag flag variable fo resuming and pausing, it implented in CollisonChecker() as a conditional statement to keep original xball and yball.
+   -  a saveGame() method to utilize  the GameLoaderSaver class
+   -  a P event to event handler to pause the game
+   -  a moveBreaker() as a method to update breaker position variables
+   -  moved the conditional statement for reduciton heart count before updating Platform in onUpdate()
+   -  used collisionChecker in onPhysicsUpdate() for setting the ball physics
+   
+   Reason:
+    
 
 ### Additional Information
 
