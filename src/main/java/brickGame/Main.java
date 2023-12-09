@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 
 private GameLoaderSaver gameLoaderSaver;
-    public int level = 0;// chnage from 0 to 1
+    public int level = 0;
 
 
     public double centerBreakX;
@@ -53,7 +53,6 @@ private GameLoaderSaver gameLoaderSaver;
     public boolean isGoldStauts      = false;
     public boolean isExistHeartBlock = false;
 
-    public boolean heartChanged = false;//added flag value
 
     public Rectangle rect;
     public int       ballRadius = 10;
@@ -401,7 +400,6 @@ private GameLoaderSaver gameLoaderSaver;
      */
     private void checkDestroyedCount() {
         if (destroyedBlockCount == blocks.size() && destroyedBlockCount != 0) {//added second condition
-            //TODO win level todo...
             //System.out.println("You Win");
 
             nextLevel();
@@ -595,8 +593,7 @@ private GameLoaderSaver gameLoaderSaver;
         Platform.runLater(() -> {
         checkDestroyedCount();
         collisionChecker.setPhysicsToBall(aBreak.xBreak,resumeFlag);
-        //added condition
-        //added new condition
+
 
 
         if (time - goldTime > 5000) {
