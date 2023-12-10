@@ -1,5 +1,7 @@
-package brickGame;
+package Ball_Init;
 
+import BlockLogic.Block;
+import brickGame.Main;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -8,7 +10,7 @@ import java.util.Random;
 /**
  * The `Ball` class manages the initialization and retrieval of the game ball.
  */
-public class Ball extends Main{
+public class Ball extends Main {
 
     /**
      * Initializes the ball with a random position within the game scene.

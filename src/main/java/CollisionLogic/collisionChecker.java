@@ -1,6 +1,7 @@
-package brickGame;
+package CollisionLogic;
 
-import javafx.application.Platform;
+import BlockLogic.Block;
+import brickGame.Main;
 
 /**
  * The `collisionChecker` class is responsible for checking and handling collisions of the ball

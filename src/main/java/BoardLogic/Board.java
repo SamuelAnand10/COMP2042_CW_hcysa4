@@ -1,11 +1,14 @@
-package brickGame;
+package BoardLogic;
+
+import BlockLogic.Block;
+import brickGame.Main;
 
 import java.util.ArrayList;
 import java.util.Random;
 /**
  * The `Board` class is responsible for initializing the game board with blocks.
  */
-public class Board extends Main{
+public class Board extends Main {
     /**
      * Initializes the game board with blocks based on the given level.
      *

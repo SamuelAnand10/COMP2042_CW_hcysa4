@@ -1,4 +1,6 @@
-package brickGame;
+package SavingLoadingLogic;
+
+import BlockLogic.BlockSerializable;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,4 +1,12 @@
-package brickGame;
+package SavingLoadingLogic;
+
+import Ball_Init.Ball;
+import BlockLogic.Block;
+import BlockLogic.BlockSerializable;
+import Breaker.Break;
+import CollisionLogic.collisionChecker;
+import brickGame.Main;
+import Score.Score;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,32 +26,32 @@ public class GameLoaderSaver extends Ball {
     /**
      * Saves the game state to a file.
      *
-             * @param level                        The level of the game.
-            * @param score                        The current score.
-            * @param heart                        The number of hearts remaining.
-            * @param destroyedBlockCount          The count of destroyed blocks.
-            * @param xBall                        The x-coordinate of the ball.
-            * @param yBall                        The y-coordinate of the ball.
-            * @param xBreak                       The x-coordinate of the breaker.
-            * @param yBreak                       The y-coordinate of the breaker.
-            * @param centerBreakX                 The center x-coordinate of the breaker.
-            * @param time                         The current time in the game.
+     * @param level                        The level of the game.
+     * @param score                        The current score.
+     * @param heart                        The number of hearts remaining.
+     * @param destroyedBlockCount          The count of destroyed blocks.
+     * @param xBall                        The x-coordinate of the ball.
+     * @param yBall                        The y-coordinate of the ball.
+     * @param xBreak                       The x-coordinate of the breaker.
+     * @param yBreak                       The y-coordinate of the breaker.
+     * @param centerBreakX                 The center x-coordinate of the breaker.
+     * @param time                         The current time in the game.
      * @param goldTime                     The time remaining for the gold status.
      * @param vX                           The x-velocity of the ball.
-            * @param isExistHeartBlock            Flag indicating the existence of heart blocks.
-            * @param isGoldStauts                 Flag indicating the gold status.
-            * @param goDownBall                   Flag indicating the downward movement of the ball.
+     * @param isExistHeartBlock            Flag indicating the existence of heart blocks.
+     * @param isGoldStauts                 Flag indicating the gold status.
+     * @param goDownBall                   Flag indicating the downward movement of the ball.
      * @param goRightBall                  Flag indicating the rightward movement of the ball.
      * @param colideToBreak                Flag indicating collision with the breaker.
      * @param colideToBreakAndMoveToRight  Flag indicating collision and movement to the right.
      * @param colideToRightWall            Flag indicating collision with the right wall.
-            * @param colideToLeftWall             Flag indicating collision with the left wall.
-            * @param colideToRightBlock           Flag indicating collision with a block on the right.
-            * @param colideToBottomBlock          Flag indicating collision with a block at the bottom.
-            * @param colideToLeftBlock            Flag indicating collision with a block on the left.
-            * @param colideToTopBlock             Flag indicating collision with a block at the top.
-            * @param blocks                       The list of blocks in the game.
-            */
+     * @param colideToLeftWall             Flag indicating collision with the left wall.
+     * @param colideToRightBlock           Flag indicating collision with a block on the right.
+     * @param colideToBottomBlock          Flag indicating collision with a block at the bottom.
+     * @param colideToLeftBlock            Flag indicating collision with a block on the left.
+     * @param colideToTopBlock             Flag indicating collision with a block at the top.
+     * @param blocks                       The list of blocks in the game.
+     */
     public void saveGame(int level, int score, int heart, int destroyedBlockCount,
                          double xBall, double yBall, double xBreak, double yBreak, double centerBreakX,
                          long time, long goldTime, double vX, boolean isExistHeartBlock, boolean isGoldStauts,
@@ -111,6 +119,7 @@ public class GameLoaderSaver extends Ball {
         LoadSave loadSave = new LoadSave();
         loadSave.read();
         collisionChecker collisionChecker = new collisionChecker();
+        Break aBreak = new Break();
 
         main.isExistHeartBlock = loadSave.isExistHeartBlock;
         main.isGoldStauts = loadSave.isGoldStauts;
@@ -154,4 +163,3 @@ public class GameLoaderSaver extends Ball {
         }
     }
 }
-

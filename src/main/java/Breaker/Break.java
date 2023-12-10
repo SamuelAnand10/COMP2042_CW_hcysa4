@@ -1,5 +1,6 @@
-package brickGame;
+package Breaker;
 
+import brickGame.Main;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;

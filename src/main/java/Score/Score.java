@@ -1,14 +1,13 @@
-package brickGame;
+package Score;
 
+import brickGame.Main;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 /**
@@ -17,6 +16,7 @@ import javafx.util.Duration;
  * UI elements such as labels and buttons for various in-game situations.
  */
 public class Score extends Main {
+
 
     // Method to show a score label with animation
     /**
@@ -92,6 +92,7 @@ public class Score extends Main {
      * @param main The Main instance to access game-related functions.
      */
     public void showGameOver(final Main main) {
+
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
             // Create a "Game Over" label
@@ -111,7 +112,7 @@ public class Score extends Main {
             restart.setFitWidth(150);
             restart.setTranslateX(175);
             restart.setTranslateY(400);
-            restart.setOnMouseClicked(event -> main.restartGame());
+            restart.setOnMouseClicked(event -> restartGame());
 
 
             // Add the label to the root
@@ -122,10 +123,8 @@ public class Score extends Main {
     // Method to show a "You Win" message
     /**
      * Displays a "You Win" message with a restart button.
-     *
-     * @param main The Main instance to access game-related functions.
      */
-    public void showWin(final Main main) {
+    public void showWin(Pane root) {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
             // Create a "You Win" label
@@ -145,11 +144,11 @@ public class Score extends Main {
             restart.setFitWidth(150);
             restart.setTranslateX(200);
             restart.setTranslateY(350);
-            restart.setOnMouseClicked(event -> main.restartGame());
+            restart.setOnMouseClicked(event -> restartGame());
 
 
             // Add the label to the root
-            main.root.getChildren().addAll(gamewin, restart);
+            root.getChildren().addAll(gamewin, restart);
         });
     }
 }

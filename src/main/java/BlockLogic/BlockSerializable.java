@@ -1,4 +1,4 @@
-package brickGame;
+package BlockLogic;
 
 import java.io.Serializable;
 /**
