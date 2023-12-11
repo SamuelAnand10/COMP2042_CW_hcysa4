@@ -64,8 +64,10 @@ This is exclusively the collisions of the ball and blocks. Even the heart reduct
 
 ### Unimplemented Features
 
-1. **Feature Name**
-   - [ ] Provide a brief explanation of the unimplemented feature.
+1. **Load**
+   - [ ] I was unable to reoslve the GameLoaderSaver class in time as there was a lot of technicalities with the parameters and storage of the file.
+2.**Music**
+   - [ ] I was in the process of adding a sound track which is in the resource folder but the Media dependency was not resolving.
 
 ## New Java Classes
 
@@ -120,9 +122,16 @@ All the code used was mainly taking the sub task run by main and using it for th
    -  a moveBreaker() as a method to update breaker position variables
    -  moved the conditional statement for reduciton heart count before updating Platform in onUpdate()
    -  used collisionChecker in onPhysicsUpdate() for setting the ball physics
+   -  a gif background
+   -  My very own made bricks that are star, heart and choco that are gifs too
+   -  utilized online assets for the pattern fill for blocks, ball, paddle and bonuses
+   -  changed heart to be an image so that the image changes to so that when u lose a life the heart image number reduces
    
    Reason:
-    All these updates were to fix the refactoring of the classes i made, as well as adding more graphics to the game such as a start screen and a background and a pause menu. 
+    All these updates were to fix the refactoring of the classes i made, as well as adding more graphics to the game such as a start screen and a background and a pause menu.
+## Refactoring
+### Info
+All classes that utilize the same variables and resources and have a similar task are put into their owne packages, therefore there are 9 packages that interact with the main java class that runs the brick game.
 
 ## Unexpected Problems
 ### Challenges Faced
