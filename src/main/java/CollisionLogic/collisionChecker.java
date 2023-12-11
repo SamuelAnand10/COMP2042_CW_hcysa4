@@ -64,7 +64,7 @@ public class collisionChecker extends Main {
         }
         if (colideToLeftWall) {
             goRightBall = true;
-            if(vX == 0){
+            if(vX <= 0){
                 vX = vX + 0.2;
         }
     }

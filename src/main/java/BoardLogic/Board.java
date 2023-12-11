@@ -17,22 +17,19 @@ public class Board extends Main {
     public void initBoard(int level) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < level + 1; j++) {
-                int r = new Random().nextInt(500);
-                if (r % 5 == 0) {
-                    continue;
-                }
+                int r = new Random().nextInt(100);
                 int type;
-                if (r % 10 == 1) {
+                if (r<10) {
                     type = Block.BLOCK_CHOCO;
-                } else if (r % 10 == 2) {
-                    if (!isExistHeartBlock) {
+                } else if (r<20 && r >= 10) {
+                    if (!isExistHeartBlock && (heart < 3)) {
                         type = Block.BLOCK_HEART;
                         isExistHeartBlock = true;
                     } else {
                         type = Block.BLOCK_NORMAL;
 
                     }
-                } else if (r % 10 == 3) {
+                } else if (r<30 && r >= 20) {
                     type = Block.BLOCK_STAR;
                 } else {
                     type = Block.BLOCK_NORMAL;

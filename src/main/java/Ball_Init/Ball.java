@@ -22,7 +22,7 @@ public class Ball extends Main {
         yBall = random.nextInt(sceneHeigt - 200) + ((level + 1) * Block.getHeight()) + 15;
         ball = new Circle();
         ball.setRadius(ballRadius);
-        ball.setFill(new ImagePattern(new Image("ball.png")));
+        ball.setFill(new ImagePattern(new Image("goldball.png")));
     }
     /**
      * Returns the ball object.

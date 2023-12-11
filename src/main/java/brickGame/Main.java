@@ -25,6 +25,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+
 import java.util.ArrayList;
     /**
      * The main class for the Brick Game application. It extends Application, implements
@@ -95,7 +96,7 @@ import java.util.ArrayList;
         };
         public Pane root;
         private Label            scoreLabel;
-        public Label            heartLabel;
+        public ImageView          heartLabel;
         private Label            levelLabel;
 
         public boolean loadFromSave = false;
@@ -151,28 +152,47 @@ import java.util.ArrayList;
                 engine.setFps(120);
                 engine.start();
             }
+
             level++;
             scoreLabel = new Label("Score: " + score);
             levelLabel = new Label("Level: " + level);
             levelLabel.setTranslateY(20);
-            heartLabel = new Label("Heart : " + heart);
-            heartLabel.setTranslateX(sceneWidth - 70);
+            Image heartImage = null;
+            switch (heart){
+                case 3:
+                    heartImage = new Image("heart3.png");
+                    break;
+                case 2:
+                    heartImage = new Image("heart2.png");
+                    break;
+                case 1:
+                    heartImage = new Image("heart1.png");
+                    break;
+                case 0:
+                    heartImage = new Image("heart0.png");
+                    break;
+
+            }
+            heartLabel = new ImageView(heartImage);
+            heartLabel.setFitHeight(30);
+            heartLabel.setFitWidth(100);
+            heartLabel.setTranslateX(sceneWidth - 100);
             ball = BALL.returnBall();//new assign
             rect = aBreak.returnRect();//new assign
             Image background;
             ImageView backgroundView;
             if(level <= 7){
-                background = new Image("backgroundV2.png");
+                background = new Image("backgroundV2.gif");
                 backgroundView = new ImageView(background);
-                backgroundView.setFitWidth(500);
-                backgroundView.setFitHeight(650);
+                backgroundView.setFitWidth(sceneWidth);
+                backgroundView.setFitHeight(sceneHeigt);
 
             }
             else{
-                background = new Image("backgroundV2.png");
+                background = new Image("backgroundV1.png");
                 backgroundView = new ImageView(background);
-                backgroundView.setFitWidth(300);
-                backgroundView.setFitHeight(4000);
+                backgroundView.setFitWidth(sceneWidth);
+                backgroundView.setFitHeight(sceneHeigt);
             }
             root.getChildren().addAll(backgroundView,rect, ball, scoreLabel, heartLabel, levelLabel);
             blocks = board.returnBlocks();// new assign
@@ -259,7 +279,7 @@ import java.util.ArrayList;
             Pane pane = new Pane();
 
             // Add background image to start pane
-            Image backgroundImageImage = new Image("Minimal Illustration Outer Space Mouse Pad.png");
+            Image backgroundImageImage = new Image("StartMenu.png");
             ImageView backgroundImageView = new ImageView(backgroundImageImage);
             backgroundImageView.setFitHeight(sceneHeigt);
             backgroundImageView.setFitWidth(sceneWidth);
@@ -511,7 +531,26 @@ import java.util.ArrayList;
                 public void run() {
 
                     scoreLabel.setText("Score: " + score);
-                    heartLabel.setText("Heart : " + heart);
+                    Image heartImage = null;
+                    switch (heart){
+                        case 3:
+                            heartImage = new Image("heart3.png");
+                            break;
+                        case 2:
+                            heartImage = new Image("heart2.png");
+                            break;
+                        case 1:
+                            heartImage = new Image("heart1.png");
+                            break;
+                        case 0:
+                            heartImage = new Image("heart0.png");
+                            break;
+
+                    }
+                    heartLabel.setFitHeight(30);
+                    heartLabel.setFitWidth(100);
+                    heartLabel.setImage(heartImage);
+
 
                     rect.setX(aBreak.xBreak);
                     rect.setY(yBreak);
@@ -554,9 +593,9 @@ import java.util.ArrayList;
 
                         if (block.type == Block.BLOCK_STAR) {
                             goldTime = time;
-                            ball.setFill(new ImagePattern(new Image("goldball.png")));
+                            ball.setFill(new ImagePattern(new Image("ball.png")));
                             System.out.println("gold ball");
-                            root.getStyleClass().add("goldRoot");
+
                             isGoldStauts = true;
                         }
 

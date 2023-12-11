@@ -7,6 +7,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
+import java.util.Random;
+
 /**
  * The `Block` class represents a block in the game. It contains information about the block's
  * position, type, and whether it has been destroyed or not. The class also provides methods for
@@ -29,7 +31,7 @@ public class Block implements Serializable {
     public int x;
     public int y;
 
-    private int width = 100;
+    private int width = 75;
     private int height = 30;
     private int paddingTop = height * 2;
     private int paddingH = 50;
@@ -73,19 +75,32 @@ public class Block implements Serializable {
         rect.setY(y);
 
         if (type == BLOCK_CHOCO) {
-            Image image = new Image("choco.jpg");
+            Image image = new Image("choco.png");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == BLOCK_HEART) {
-            Image image = new Image("heart.jpg");
+            Image image = new Image("heart.gif");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else if (type == BLOCK_STAR) {
-            Image image = new Image("star.jpg");
+            Image image = new Image("star.gif");
             ImagePattern pattern = new ImagePattern(image);
             rect.setFill(pattern);
         } else {
-            rect.setFill(color);
+            int randomInt = new Random().nextInt(1,7);
+            Image image = switch (randomInt) {
+                case 1 -> new Image("brickV1.png");
+                case 2 -> new Image("brickV2.png");
+                case 3 -> new Image("brickV3.png");
+                case 4 -> new Image("brickV4.png");
+                case 5 -> new Image("brickV5.png");
+                case 6 -> new Image("brickV6.png");
+                default -> null;
+            };
+
+            assert image != null;
+            ImagePattern pattern = new ImagePattern(image);
+            rect.setFill(pattern);
         }
 
     }

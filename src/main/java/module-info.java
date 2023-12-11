@@ -1,7 +1,9 @@
 module brickGame {
-    requires javafx.fxml;
+
     requires javafx.controls;
     requires java.datatransfer;
+
+    requires javafx.graphics;
 
     opens brickGame to javafx.fxml;
     exports brickGame;

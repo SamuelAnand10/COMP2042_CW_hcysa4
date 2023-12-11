@@ -24,7 +24,7 @@ public class Break extends Main {
         rect.setX(xBreak);
         rect.setY(yBreak);
 
-        ImagePattern pattern = new ImagePattern(new Image("block.jpg"));
+        ImagePattern pattern = new ImagePattern(new Image("paddle.png"));
 
         rect.setFill(pattern);
     }
