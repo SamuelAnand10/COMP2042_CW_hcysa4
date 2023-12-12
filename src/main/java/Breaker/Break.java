@@ -9,6 +9,7 @@ import javafx.util.Duration;
 
 /**
  * The `Break` class manages the initialization and retrieval of the game breaker.
+ * @see <a href="...Breaker/Break.java">Original Source Code</a>
  */
 
 public class Break extends Main {
@@ -16,6 +17,7 @@ public class Break extends Main {
     private Rectangle rect;
     /**
      * Initializes the breaker with a rectangle and an image pattern.
+     * @see #initBreak()
      */
     public void initBreak() {
         rect = new Rectangle();
@@ -30,6 +32,7 @@ public class Break extends Main {
     }
     /**
      * Returns the rectangle representing the breaker.
+     * @see #returnRect()
      */
     public Rectangle returnRect() {
         return rect;

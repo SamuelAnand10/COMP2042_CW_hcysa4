@@ -9,12 +9,14 @@ import javafx.scene.shape.Circle;
 import java.util.Random;
 /**
  * The `Ball` class manages the initialization and retrieval of the game ball.
+ * @see <a href="...Ball_Init/Ball.java">Original Source Code</a>
  */
 public class Ball extends Main {
 
     /**
      * Initializes the ball with a random position within the game scene.
      * The ball is positioned based on the scene width, scene height, and current game level.
+     * @see #initBall(int, int)
      */
     public void initBall(int sceneWidth,int sceneHeigt) { //changed to public
         Random random = new Random();
@@ -26,6 +28,7 @@ public class Ball extends Main {
     }
     /**
      * Returns the ball object.
+     * @see #returnBall()
      */
     public Circle returnBall(){
         return ball;

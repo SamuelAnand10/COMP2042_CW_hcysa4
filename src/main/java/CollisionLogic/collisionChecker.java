@@ -6,6 +6,7 @@ import brickGame.Main;
 /**
  * The `collisionChecker` class is responsible for checking and handling collisions of the ball
  * with the walls, breaker, and blocks. It also manages the physics of the ball movement.
+ * @see <a href="...CollisionLogic/collisionChecker.java">Original Source Code</a>
  */
 public class collisionChecker extends Main {
 
@@ -24,6 +25,7 @@ public class collisionChecker extends Main {
     public double vY = 1.000;
     /**
      * Resets all collision flags to their initial state.
+     * @see #resetColideFlags() 
      */
     public void resetColideFlags() {
         colideToBreak = false;
@@ -37,6 +39,7 @@ public class collisionChecker extends Main {
     }
     /**
      * Handles collisions with walls and adjusts ball movement accordingly.
+     * @see #WallCollide() 
      */
     public void WallCollide() {
         if (xBall >= sceneWidth) {
@@ -71,6 +74,7 @@ public class collisionChecker extends Main {
     }
     /**
      * Handles collisions with the breaker and adjusts ball movement accordingly.
+     * @see #BreakerCollide(double) 
      */
     public void BreakerCollide(double xBreak) {
         if (((yBall + ballRadius) >= yBreak) && ((yBall - ballRadius) <= (yBreak + breakHeight))) {//added brackets
@@ -104,6 +108,7 @@ public class collisionChecker extends Main {
     }
     /**
      * Handles collisions with blocks and adjusts ball movement accordingly.
+     * @see #BlockCollide() 
      */
     public void BlockCollide() {
 
@@ -128,6 +133,7 @@ public class collisionChecker extends Main {
     }
     /**
      * Sets the physics for the ball movement based on collisions and updates its position.
+     * @see #setPhysicsToBall(double, boolean) 
      */
     public void setPhysicsToBall(double xBreak, boolean resumeFlag) {
         double originalXBall = xBall;
@@ -172,12 +178,14 @@ public class collisionChecker extends Main {
     }
     /**
      * Gets the current x-coordinate of the ball.
+     * @see #getXball() 
      */
     public double getXball(){
      return xBall;
     }//getter
     /**
      * Gets the current y-coordinate of the ball.
+     * @see #getYball() 
      */
     public double getYball(){
         return yBall;
@@ -186,6 +194,7 @@ public class collisionChecker extends Main {
     /**
      * Checks for collisions with the breaker and blocks.
      * Returns true if a collision is detected, false otherwise.
+     * @see #checkCollision(double)
      */
     private boolean checkCollision(double xBreak) {
         for (Block block : blocks) {

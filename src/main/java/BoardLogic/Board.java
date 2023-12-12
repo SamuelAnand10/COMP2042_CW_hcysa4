@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Random;
 /**
  * The `Board` class is responsible for initializing the game board with blocks.
+ * @see <a href="...BoardLogic/Board.java">Original Source Code</a>
  */
 public class Board extends Main {
     /**
      * Initializes the game board with blocks based on the given level.
      *
      * @param level The level of the game.
+     *              @see #initBoard(int)
      */
     public void initBoard(int level) {
         for (int i = 0; i < 4; i++) {
@@ -44,6 +46,7 @@ public class Board extends Main {
      * Returns the list of blocks on the game board.
      *
      * @return The list of blocks.
+     * @see #returnBlocks()
      */
 public ArrayList<Block> returnBlocks(){
         return blocks;

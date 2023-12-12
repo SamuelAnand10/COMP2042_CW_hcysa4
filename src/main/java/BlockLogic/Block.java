@@ -13,6 +13,7 @@ import java.util.Random;
  * The `Block` class represents a block in the game. It contains information about the block's
  * position, type, and whether it has been destroyed or not. The class also provides methods for
  * drawing the block and checking for collisions with the ball.
+ * @see <a href="...BlockLogic/Block.java">Original Source Code</a>
  */
 public class Block implements Serializable {
     private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);
@@ -63,6 +64,7 @@ public class Block implements Serializable {
     }
     /**
      * Draws the block based on its type and sets the fill accordingly.
+     * @see #draw()
      */
     private void draw() {
         x = (column * width) + paddingH;
@@ -109,6 +111,7 @@ public class Block implements Serializable {
 
     /**
      * Checks for collisions with the ball and returns the type of hit or NO_HIT if no collision.
+     * @see #checkHitToBlock(double, double)
      */
     public int checkHitToBlock(double xBall, double yBall) {
 
@@ -136,24 +139,28 @@ public class Block implements Serializable {
     }
     /**
      * Returns the top padding of the blocks.
+     * @see #getPaddingTop()
      */
     public static int getPaddingTop() {
         return block.paddingTop;
     }
     /**
      * Returns the horizontal padding of the blocks.
+     * @see #getPaddingH()
      */
     public static int getPaddingH() {
         return block.paddingH;
     }
     /**
      * Returns the height of the blocks.
+     * @see #getHeight()
      */
     public static int getHeight() {
         return block.height;
     }
     /**
      * Returns the width of the blocks.
+     * @see #getWidth()
      */
     public static int getWidth() {
         return block.width;

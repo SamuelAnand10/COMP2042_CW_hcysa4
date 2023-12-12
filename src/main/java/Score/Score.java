@@ -14,6 +14,7 @@ import javafx.util.Duration;
  * The Score class provides methods for displaying score-related messages and animations
  * within the Brick Game application. It extends the functionality of the Main class to handle
  * UI elements such as labels and buttons for various in-game situations.
+ * @see <a href="...Score/Score.java">Original Source Code</a>
  */
 public class Score extends Main {
 
@@ -26,6 +27,7 @@ public class Score extends Main {
      * @param y     The Y-coordinate for the label.
      * @param score The score value to be displayed.
      * @param root  The JavaFX Pane to which the label will be added.
+     *              @see #show(double, double, int, Pane) 
      */
     public void show(final double x, final double y, int score, Pane root) {
         // Determine sign based on the score
@@ -59,6 +61,7 @@ public class Score extends Main {
      *
      * @param message The message to be displayed.
      * @param root    The JavaFX Pane to which the label will be added.
+     *                @see #showMessage(String, Pane) 
      */
     public void showMessage(String message, Pane root) {
         // Create a label with the message and set its initial position
@@ -90,6 +93,7 @@ public class Score extends Main {
      * Displays a "Game Over" message with a restart button.
      *
      * @param main The Main instance to access game-related functions.
+     *             @see #showGameOver(Main) 
      */
     public void showGameOver(final Main main) {
 
@@ -123,6 +127,7 @@ public class Score extends Main {
     // Method to show a "You Win" message
     /**
      * Displays a "You Win" message with a restart button.
+     * @see #showWin(Pane)
      */
     public void showWin(Pane root) {
         // Run on JavaFX thread to update UI

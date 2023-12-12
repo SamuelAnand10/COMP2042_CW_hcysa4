@@ -13,14 +13,17 @@ import java.util.ArrayList;
 import java.util.Random;
 /**
  * The `GameLoaderSaver` class is responsible for saving and loading the game state.
+ * @see <a href="...SavingLoadingLogic/GameLoaderSaver.java">Original Source Code</a>
  */
 public class GameLoaderSaver extends Ball {
     /**
      * The file path for saving the game state.
+     * @see #savePath
      */
     public static String savePath = "D:/save/save.mdds";
     /**
      * The directory path for saving the game state file.
+     * @see #savePathDir
      */
     public static String savePathDir = "D:/save/";
     /**
@@ -51,6 +54,7 @@ public class GameLoaderSaver extends Ball {
      * @param colideToLeftBlock            Flag indicating collision with a block on the left.
      * @param colideToTopBlock             Flag indicating collision with a block at the top.
      * @param blocks                       The list of blocks in the game.
+     *                                     @see #saveGame() 
      */
     public void saveGame(int level, int score, int heart, int destroyedBlockCount,
                          double xBall, double yBall, double xBreak, double yBreak, double centerBreakX,
@@ -114,6 +118,7 @@ public class GameLoaderSaver extends Ball {
      * Loads the game state from a file.
      *
      * @param main The main class instance.
+     *             @see #loadGame(Main)
      */
     public void loadGame(Main main) {
         LoadSave loadSave = new LoadSave();

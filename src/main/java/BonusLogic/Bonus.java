@@ -11,6 +11,7 @@ import java.util.Random;
  * The Bonus class represents a bonus object in the Brick Game application. Bonuses are created
  * when specific block types are destroyed and can be collected by the player for additional points.
  * This class implements Serializable to support game state saving/loading.
+ * @see <a href="...BonusLogic/Bonus.java">Original Source Code</a>
  */
 
 public class Bonus implements Serializable {
@@ -25,6 +26,7 @@ public class Bonus implements Serializable {
      *
      * @param row    The row position of the associated block.
      * @param column The column position of the associated block.
+     *
      */
     public Bonus(int row, int column) {
         x = (column * (Block.getWidth())) + Block.getPaddingH() + (Block.getWidth() / 2) - 15;
@@ -35,6 +37,7 @@ public class Bonus implements Serializable {
     /**
      * Draws the bonus object by creating a Rectangle with a specific size and setting its fill
      * based on a randomly chosen bonus image.
+     * @see #draw()
      */
     private void draw() {
         choco = new Rectangle();

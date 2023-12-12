@@ -10,6 +10,7 @@ import java.util.ArrayList;
 /**
  * The LoadSave class is responsible for reading saved game data from a file.
  * It retrieves various game state variables and block data from the saved file.
+ * @see <a href="...SavingLoadingLogic/LoadSave.java">Original Source Code</a>
  */
 public class LoadSave {
     public boolean          isExistHeartBlock;
@@ -40,6 +41,7 @@ public class LoadSave {
 
     /**
      * Reads saved game data from the specified file and updates the class members accordingly.
+     * @see #read()
      */
     public void read() {
 
