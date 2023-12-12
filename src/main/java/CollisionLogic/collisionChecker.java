@@ -6,7 +6,7 @@ import brickGame.Main;
 /**
  * The `collisionChecker` class is responsible for checking and handling collisions of the ball
  * with the walls, breaker, and blocks. It also manages the physics of the ball movement.
- * @see <a href="...CollisionLogic/collisionChecker.java">Original Source Code</a>
+ * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/CollisionLogic/collisionChecker.java">Original Source Code</a>
  */
 public class collisionChecker extends Main {
 

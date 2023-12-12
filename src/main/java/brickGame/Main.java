@@ -32,7 +32,7 @@ import java.util.ArrayList;
      * The main class for the Brick Game application. It extends Application, implements
      * EventHandler for handling key events, and implements GameEngine.OnAction for game events.
      * This class initializes the game components, manages the game state, and handles user input.
-     * @see <a href="...brickGame/Main.java">Original Source Code</a>
+     * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/brickGame/Main.java">Original Source Code</a>
      */
     public class Main extends Application implements EventHandler<KeyEvent>, GameEngine.OnAction {
 

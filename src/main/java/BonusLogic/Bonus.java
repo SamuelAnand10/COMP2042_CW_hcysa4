@@ -11,7 +11,7 @@ import java.util.Random;
  * The Bonus class represents a bonus object in the Brick Game application. Bonuses are created
  * when specific block types are destroyed and can be collected by the player for additional points.
  * This class implements Serializable to support game state saving/loading.
- * @see <a href="...BonusLogic/Bonus.java">Original Source Code</a>
+ * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/BonusLogic/Bonus.java">Original Source Code</a>
  */
 
 public class Bonus implements Serializable {

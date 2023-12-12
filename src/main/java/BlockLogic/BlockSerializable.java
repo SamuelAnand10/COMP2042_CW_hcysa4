@@ -4,7 +4,7 @@ import java.io.Serializable;
 /**
  * The `BlockSerializable` class represents a serializable version of the `Block` class.
  * It stores information about the row, column, and type of block.
- * @see <a href="...BlockLogic/BlockSerializable.java">Original Source Code</a>
+ * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/BlockLogic/BlockSerializable.java">Original Source Code</a>
  */
 public class BlockSerializable implements Serializable {
     /**

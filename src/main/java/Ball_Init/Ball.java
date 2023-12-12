@@ -9,7 +9,7 @@ import javafx.scene.shape.Circle;
 import java.util.Random;
 /**
  * The `Ball` class manages the initialization and retrieval of the game ball.
- * @see <a href="...Ball_Init/Ball.java">Original Source Code</a>
+ * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/Ball_Init/Ball.java">Original Source Code</a>
  */
 public class Ball extends Main {
 

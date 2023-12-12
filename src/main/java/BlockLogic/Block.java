@@ -13,7 +13,7 @@ import java.util.Random;
  * The `Block` class represents a block in the game. It contains information about the block's
  * position, type, and whether it has been destroyed or not. The class also provides methods for
  * drawing the block and checking for collisions with the ball.
- * @see <a href="...BlockLogic/Block.java">Original Source Code</a>
+ * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/BlockLogic/Block.java">Original Source Code</a>
  */
 public class Block implements Serializable {
     private static Block block = new Block(-1, -1, Color.TRANSPARENT, 99);

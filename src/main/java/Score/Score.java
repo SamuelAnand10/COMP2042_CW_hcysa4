@@ -14,7 +14,7 @@ import javafx.util.Duration;
  * The Score class provides methods for displaying score-related messages and animations
  * within the Brick Game application. It extends the functionality of the Main class to handle
  * UI elements such as labels and buttons for various in-game situations.
- * @see <a href="...Score/Score.java">Original Source Code</a>
+ * @see <a href="https://github.com/SamuelAnand10/COMP2042_CW_hcysa4/tree/ff7a6c66a3ce2dd61fe0b9c8113bcfccf5896ef3/src/main/java/Score/Score.java">Original Source Code</a>
  */
 public class Score extends Main {
 
