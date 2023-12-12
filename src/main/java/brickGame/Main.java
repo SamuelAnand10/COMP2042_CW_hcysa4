@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
+
 import java.util.ArrayList;
     /**
      * The main class for the Brick Game application. It extends Application, implements
@@ -643,7 +644,7 @@ import java.util.ArrayList;
 
 
                 if (time - goldTime > 5000) {
-                    ball.setFill(new ImagePattern(new Image("ball.png")));
+                    ball.setFill(new ImagePattern(new Image("goldball.png")));
                     root.getStyleClass().remove("goldRoot");
                     isGoldStauts = false;
                 }

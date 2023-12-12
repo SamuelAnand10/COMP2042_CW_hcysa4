@@ -96,7 +96,7 @@ public class Score extends Main {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
             // Create a "Game Over" label
-            Image gamewinImage = new Image("champion - Copy.png");
+            Image gamewinImage = new Image("Blue and Red Modern Illustration Game Mouse Pad.png");
             ImageView gamewin = new ImageView(gamewinImage);
             gamewin.setX(50);
             gamewin.setY(100);
@@ -112,7 +112,7 @@ public class Score extends Main {
             restart.setFitWidth(150);
             restart.setTranslateX(175);
             restart.setTranslateY(400);
-            restart.setOnMouseClicked(event -> restartGame());
+            restart.setOnMouseClicked(event -> main.restartGame());
 
 
             // Add the label to the root
@@ -128,7 +128,7 @@ public class Score extends Main {
         // Run on JavaFX thread to update UI
         Platform.runLater(() -> {
             // Create a "You Win" label
-            Image gamewinImage = new Image("Blue and Red Modern Illustration Game Mouse Pad.png");
+            Image gamewinImage = new Image("champion - Copy.png");
             ImageView gamewin = new ImageView(gamewinImage);
             gamewin.setX(50);
             gamewin.setY(100);
